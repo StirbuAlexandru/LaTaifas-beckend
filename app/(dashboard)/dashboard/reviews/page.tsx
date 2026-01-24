@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Star, Trash2, RefreshCw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../../../components/ui/button';
 
 interface Review {
   id: string;

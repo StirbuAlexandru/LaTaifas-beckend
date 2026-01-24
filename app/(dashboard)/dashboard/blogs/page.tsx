@@ -1,5 +1,5 @@
-import BlogActions from "@/dashboard/blog/BlogActions";
-import SearchBlogs from "@/dashboard/blog/SearchBlogs";
+import BlogActions from "../../../../dashboard/blog/BlogActions";
+import SearchBlogs from "../../../../dashboard/blog/SearchBlogs";
 import React from "react";
 
 const BlogsPage = () => {

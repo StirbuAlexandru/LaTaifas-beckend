@@ -1,5 +1,5 @@
-import AddBlogForm from '@/dashboard/forms/BlogForm'
-import BreadcrumbComponent from '@/components/others/Breadcrumb'
+import AddBlogForm from '../../../../../dashboard/forms/BlogForm'
+import BreadcrumbComponent from '../../../../../components/others/Breadcrumb'
 import React from 'react'
 
 const AddBlogPage = () => {

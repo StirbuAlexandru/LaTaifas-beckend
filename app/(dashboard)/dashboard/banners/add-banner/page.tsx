@@ -1,6 +1,6 @@
-import BannerForm from '@/dashboard/forms/BannerForm'
+import BannerForm from '../../../../../dashboard/forms/BannerForm'
 // Fixed import issue
-import BreadcrumbComponent from '@/components/others/Breadcrumb'
+import BreadcrumbComponent from '../../../../../components/others/Breadcrumb'
 import React from 'react'
 
 const AddBannerPage = () => {

@@ -1,7 +1,7 @@
-﻿﻿﻿import SearchCustomer from "@/dashboard/customer/SearchCustomer";
-import BreadcrumbComponent from '@/components/others/Breadcrumb';
-import Loader from '@/components/others/Loader';
-import Pagination from '@/components/others/Pagination';
+﻿﻿import SearchCustomer from "../../../../dashboard/customer/SearchCustomer";
+import BreadcrumbComponent from '../../../../components/others/Breadcrumb';
+import Loader from '../../../../components/others/Loader';
+import Pagination from '../../../../components/others/Pagination';
 import Image from "next/image";
 import React, { Suspense, useState } from "react";
 

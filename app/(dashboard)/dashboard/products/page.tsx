@@ -1,10 +1,10 @@
 'use client';
 
-import ProductActions from "@/dashboard/product/ProductActions";
-import ProductHeader from "@/dashboard/product/ProductHeader";
-import ProductTable from "@/dashboard/product/ProductTable";
+import ProductActions from "../../../../dashboard/product/ProductActions";
+import ProductHeader from "../../../../dashboard/product/ProductHeader";
+import ProductTable from "../../../../dashboard/product/ProductTable";
 import React, { useState, useEffect } from "react";
-import useCategories from "@/lib/useCategories";
+import useCategories from "../../../../lib/useCategories";
 
 interface Product {
   id: string;

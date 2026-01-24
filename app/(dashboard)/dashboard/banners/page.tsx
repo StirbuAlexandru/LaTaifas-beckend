@@ -1,5 +1,5 @@
-import BannerActions from '@/dashboard/banner/BannerActions';
-import { bannerData } from '@/data/banner/bannerData';
+import BannerActions from '../../../../dashboard/banner/BannerActions';
+import { bannerData } from '../../../../data/banner/bannerData';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
