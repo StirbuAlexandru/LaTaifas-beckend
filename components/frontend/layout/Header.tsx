@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ShoppingCart, Menu, X } from 'lucide-react';
-import { useCart } from '@/context/CartContext';
-import { Button } from '@/components/ui/button';
+import { useCart } from '../../../context/CartContext';
+import { Button } from '../../ui/button';
 
 const Header = () => {
   const { cart, openCart } = useCart();

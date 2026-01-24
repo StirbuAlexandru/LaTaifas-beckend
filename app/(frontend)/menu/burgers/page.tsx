@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import ProductCard from '@/components/frontend/menu/ProductCard';
-import { Product } from '@/types/product';
+import ProductCard from '../../../../components/frontend/menu/ProductCard';
+import { Product } from '../../../../types/product';
 
 export default function BurgersCategoryPage() {
   const [products, setProducts] = useState<Product[]>([]);

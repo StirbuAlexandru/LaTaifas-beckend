@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import { Input } from "../../components/ui/input";
 import Link from "next/link";
 import React from "react";
 import {
@@ -7,7 +7,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "../../components/ui/select";
 
 interface ProductHeaderProps {
   onSearchChange: (value: string) => void;

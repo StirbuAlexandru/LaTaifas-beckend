@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { useCart } from '@/context/CartContext';
+import { useCart } from '../../../context/CartContext';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../../components/ui/button';
 import { ShoppingBag, ArrowLeft, Trash2 } from 'lucide-react';
 
 export default function CartPage() {

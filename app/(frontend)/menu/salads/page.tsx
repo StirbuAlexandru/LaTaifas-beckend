@@ -1,6 +1,6 @@
 import React from 'react';
-import { productsData } from '@/data/products/productsData';
-import ProductCard from '@/components/frontend/menu/ProductCard';
+import { productsData } from '../../../../data/products/productsData';
+import ProductCard from '../../../../components/frontend/menu/ProductCard';
 
 export default function SaladsCategoryPage() {
   // Filter products by category - for now showing all products

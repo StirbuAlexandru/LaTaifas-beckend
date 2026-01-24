@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Product } from '@/types/product';
-import { Button } from '@/components/ui/button';
+import { Product } from '../../types/product';
+import { Button } from '../ui/button';
 import { Star, ShoppingCart, Minus, Plus } from 'lucide-react';
-import { useCart } from '@/context/CartContext';
-import { calculateFinalPrice, calculateDiscountPercentage } from '@/utils/discountCalculator';
+import { useCart } from '../../context/CartContext';
+import { calculateFinalPrice, calculateDiscountPercentage } from '../../utils/discountCalculator';
 
 interface ProductDetailsProps {
   product: Product;

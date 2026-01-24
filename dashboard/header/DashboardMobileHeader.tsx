@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "../../components/ui/sheet";
 import { Menu } from "lucide-react";
 
 import {
@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 const DashboardMobileHeader = () => {
   const pathname = usePathname();

@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import useCategories, { Category } from "@/lib/useCategories";
+import useCategories, { Category } from "../../lib/useCategories";
 import CategoryForm from "./CategoryForm";
 import CategoryTree from "./CategoryTree";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../components/ui/button";
 
 export default function CategoriesPage() {
   const { categories, loading, error, createCategory, updateCategory, deleteCategory, refetch } =

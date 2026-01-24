@@ -4,10 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Wine as WineIcon, Filter, ShoppingCart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { calculateFinalPrice } from '@/utils/discountCalculator';
-import { useCart } from '@/context/CartContext';
+import { Button } from '../../../components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
+import { calculateFinalPrice } from '../../../utils/discountCalculator';
+import { useCart } from '../../../context/CartContext';
 
 interface Wine {
   id: string;

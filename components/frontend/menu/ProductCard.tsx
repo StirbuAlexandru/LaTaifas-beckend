@@ -3,12 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Product } from '@/types/product';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Product } from '../../../types/product';
+import { Button } from '../../ui/button';
+import { Badge } from '../../ui/badge';
 import { ShoppingCart, Star, Leaf } from 'lucide-react';
-import { useCart } from '@/context/CartContext';
-import { calculateFinalPrice, calculateDiscountPercentage } from '@/utils/discountCalculator';
+import { useCart } from '../../../context/CartContext';
+import { calculateFinalPrice, calculateDiscountPercentage } from '../../../utils/discountCalculator';
 
 interface ProductCardProps {
   product: Product;

@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '../../../../context/AuthContext';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { Button } from '../../../../components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../../components/ui/card';
+import { Separator } from '../../../../components/ui/separator';
 import { ArrowLeft, MapPin, Clock, CheckCircle, User } from 'lucide-react';
 
 const mockOrder = {

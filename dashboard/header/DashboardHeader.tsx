@@ -1,6 +1,6 @@
 'use client';
 
-import Logo from "@/components/logo/Logo";
+import Logo from "../../components/logo/Logo";
 import React from "react";
 import Notification from "../notification/Notification";
 import DashboardMobileHeader from "./DashboardMobileHeader";

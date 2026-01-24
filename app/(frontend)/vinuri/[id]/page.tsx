@@ -5,8 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { Wine as WineIcon, ArrowLeft, Calendar, Droplet, Grape, MapPin, Building2, ShoppingCart, Minus, Plus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useCart } from '@/context/CartContext';
+import { Button } from '../../../../components/ui/button';
+import { useCart } from '../../../../context/CartContext';
 
 interface Wine {
   id: string;

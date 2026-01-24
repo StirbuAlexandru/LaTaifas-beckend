@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '../../../lib/supabaseClient';
 import { createClient } from '@supabase/supabase-js';
-import { sendOrderStatusEmail, sendRestaurantNotification } from '@/lib/emailService';
+import { sendOrderStatusEmail, sendRestaurantNotification } from '../../../lib/emailService';
 
 // Create admin client for service role operations
 let supabaseAdmin: any = null;

@@ -1,9 +1,9 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import ProductCard from '@/components/frontend/menu/ProductCard';
-import { Product } from '@/types/product';
-import { Button } from '@/components/ui/button';
+import ProductCard from '../menu/ProductCard';
+import { Product } from '../../../types/product';
+import { Button } from '../../ui/button';
 import { ChevronDown, ChevronUp, Sparkles, TrendingUp } from 'lucide-react';
 
 const FeaturedProducts = () => {

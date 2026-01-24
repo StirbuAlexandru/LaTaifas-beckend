@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import ProductGallery from '@/components/product/ProductGallery';
-import ProductDetails from '@/components/product/ProductDetails';
-import { Button } from '@/components/ui/button';
+import ProductGallery from '../../../../components/product/ProductGallery';
+import ProductDetails from '../../../../components/product/ProductDetails';
+import { Button } from '../../../../components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import { Product } from '@/types/product';
+import { Product } from '../../../../types/product';
 
 interface ProductApiResponse {
   id: string;

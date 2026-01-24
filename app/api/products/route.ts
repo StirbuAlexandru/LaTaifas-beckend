@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '../../../lib/supabaseClient';
 import { createClient } from '@supabase/supabase-js';
-import { DiscountType } from '@/utils/discountCalculator';
+import { DiscountType } from '../../../utils/discountCalculator';
 
 // Prefer a server-side service role client when available for admin operations
 let supabaseAdmin: any = null;

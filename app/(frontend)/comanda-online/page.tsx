@@ -3,15 +3,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from '../../../components/ui/button';
+import { Card, CardContent } from '../../../components/ui/card';
+import { Input } from '../../../components/ui/input';
+import { Label } from '../../../components/ui/label';
 import { ShoppingCart, Search, Filter, X, Star, Clock, MapPin, ChevronDown, Leaf, Plus, Minus } from 'lucide-react';
-import { useCart } from '@/context/CartContext';
-import { calculateFinalPrice, calculateDiscountPercentage } from '@/utils/discountCalculator';
-import { Product } from '@/types/product';
-import { ProductGridSkeleton } from '@/components/frontend/skeleton/ProductSkeleton';
+import { useCart } from '../../../context/CartContext';
+import { calculateFinalPrice, calculateDiscountPercentage } from '../../../utils/discountCalculator';
+import { Product } from '../../../types/product';
+import { ProductGridSkeleton } from '../../../components/frontend/skeleton/ProductSkeleton';
 
 interface Category {
   id: string;

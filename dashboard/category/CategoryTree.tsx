@@ -1,5 +1,5 @@
 import React from "react";
-import { Category } from "@/lib/useCategories";
+import { Category } from "../../lib/useCategories";
 
 interface CategoryTreeProps {
   categories: Category[];

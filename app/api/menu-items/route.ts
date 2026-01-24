@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '../../../lib/supabaseClient';
 
 // GET - Fetch all menu items (optionally filter by category_id)
 export async function GET(request: Request) {

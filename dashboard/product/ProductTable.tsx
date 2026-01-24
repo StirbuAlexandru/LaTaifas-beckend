@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Edit, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { calculateFinalPrice } from '@/utils/discountCalculator';
+import { Button } from '../../components/ui/button';
+import { calculateFinalPrice } from '../../utils/discountCalculator';
 
 interface Product {
   id: string;
