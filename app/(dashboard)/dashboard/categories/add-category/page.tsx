@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import CategoryForm from '@/dashboard/forms/CategoryForm';
-import BreadcrumbComponent from '@/components/others/Breadcrumb';
-import useCategories from '@/lib/useCategories';
+import CategoryForm from '../../../../../dashboard/forms/CategoryForm';
+import BreadcrumbComponent from '../../../../../components/others/Breadcrumb';
+import useCategories from '../../../../../lib/useCategories';
 import { useRouter } from 'next/navigation';
 
 const AddCategoryPage = () => {
