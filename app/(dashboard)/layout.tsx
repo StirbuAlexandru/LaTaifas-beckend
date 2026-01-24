@@ -1,6 +1,6 @@
-import DashboardHeader from "@/dashboard/header/DashboardHeader";
-import DashboardSidebar from "@/dashboard/sidebar/DashboardSidebar";
-import ScrollToTop from "@/components/shared/ScrollToTop";
+import DashboardHeader from "../dashboard/header/DashboardHeader";
+import DashboardSidebar from "../dashboard/sidebar/DashboardSidebar";
+import ScrollToTop from "../components/shared/ScrollToTop";
 import React from "react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {

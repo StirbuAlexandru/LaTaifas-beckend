@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '../../../../components/ui/button';
+import { Input } from '../../../../components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../../components/ui/select';
 import { Edit, Trash2, Plus, Wine as WineIcon } from 'lucide-react';
-import { calculateFinalPrice } from '@/utils/discountCalculator';
+import { calculateFinalPrice } from '../../../../utils/discountCalculator';
 
 interface Wine {
   id: string;
