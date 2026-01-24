@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Phone, ChevronDown, ChevronUp, Users, Calendar } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../ui/button';
 
 const EventsSection = () => {
   const [showMoreImages, setShowMoreImages] = useState(false);

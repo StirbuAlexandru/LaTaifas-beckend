@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../../../components/ui/card';
+import { Button } from '../../../../../components/ui/button';
+import { Alert, AlertDescription } from '../../../../../components/ui/alert';
 import { Trash2, RefreshCw, AlertTriangle, CheckCircle } from 'lucide-react';
 
 export default function OrdersCleanupPage() {

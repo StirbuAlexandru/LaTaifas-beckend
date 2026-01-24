@@ -1,5 +1,5 @@
-import ProductForm from '@/dashboard/forms/ProductForm'
-import BreadcrumbComponent from '@/components/others/Breadcrumb'
+import ProductForm from '../../../../../dashboard/forms/ProductForm'
+import BreadcrumbComponent from '../../../../../components/others/Breadcrumb'
 import React from 'react'
 
 const AddProductPage = () => {

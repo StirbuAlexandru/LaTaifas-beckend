@@ -1,4 +1,4 @@
-import DashboardPageOne from "@/components/pages/dashboard-pages/DashboardPageOne";
+import DashboardPageOne from "../../../components/pages/dashboard-pages/DashboardPageOne";
 
 const DashboardPage = () => {
 
