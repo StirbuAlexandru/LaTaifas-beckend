@@ -1,0 +1,355 @@
+/* stylelint-disable at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Food / Restaurant Color Palette */
+    --background: 30 33% 98%; /* Warm white */
+    --foreground: 0 0% 0%; /* Black */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+
+    --primary: 0 70% 45%; /* Warm restaurant red */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 30 100% 96%; /* Warm cream */
+    --secondary-foreground: 0 0% 20%;
+
+    --accent: 27 90% 55%; /* Food orange */
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 30 10% 90%;
+    --muted-foreground: 0 0% 35%;
+
+    --border: 30 15% 85%;
+    --input: 30 15% 85%;
+    --ring: 0 70% 45%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 10 75% 55%;
+    --chart-2: 170 50% 40%;
+    --chart-3: 200 35% 30%;
+    --chart-4: 40 70% 60%;
+    --chart-5: 20 80% 60%;
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 90%;
+
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 90%;
+
+    --primary: 0 70% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 30 10% 25%;
+    --secondary-foreground: 0 0% 90%;
+
+    --accent: 27 60% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 70% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Performance optimizations */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Optimize animations */
+  .group:hover,
+  [class*="hover:"],
+  [class*="transition"] {
+    will-change: transform, opacity;
+  }
+  
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Custom Cheerful Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10%, 30% {
+    transform: scale(1.1);
+  }
+  20%, 40% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes expandProducts {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes collapseProducts {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.98);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px) rotateY(15deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px) rotateY(-15deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotateY(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0) rotateY(0) scale(1);
+  }
+  30% {
+    opacity: 0.8;
+    transform: translateX(-30px) rotateY(-5deg) scale(0.98);
+  }
+  70% {
+    opacity: 0.4;
+    transform: translateX(-60px) rotateY(-10deg) scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100px) rotateY(-15deg) scale(0.9);
+  }
+}
+
+@keyframes slideOutRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0) rotateY(0) scale(1);
+  }
+  30% {
+    opacity: 0.8;
+    transform: translateX(30px) rotateY(5deg) scale(0.98);
+  }
+  70% {
+    opacity: 0.4;
+    transform: translateX(60px) rotateY(10deg) scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px) rotateY(15deg) scale(0.9);
+  }
+}
+
+@keyframes collapseSmooth {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(-15px) scale(0.97);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+    filter: blur(2px);
+  }
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  opacity: 0;
+}
+
+.animate-slideOutLeft {
+  animation: slideOutLeft 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-slideOutRight {
+  animation: slideOutRight 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-collapseSmooth {
+  animation: collapseSmooth 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-in;
+}
+
+.animate-expand {
+  animation: expandProducts 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-expandProducts {
+  animation: expandProducts 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-collapse {
+  animation: collapseProducts 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+.animate-fade-in-delay {
+  animation: fade-in 0.8s ease-out 0.2s both;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fade-in 0.8s ease-out 0.4s both;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading spinner enhancement */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* stylelint-enable at-rule-no-unknown */
