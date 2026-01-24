@@ -28,7 +28,7 @@ const Header = () => {
       {/* Main Header */}
       <header className="sticky top-0 z-40 w-full border-b-2 backdrop-blur-md" style={{ backgroundColor: 'rgba(232, 234, 234, 0.95)', borderColor: '#bf3d3d', boxShadow: '0 4px 16px rgba(191, 61, 61, 0.25)' }}>
         <div className="container mx-auto px-4 relative">
-          <div className="flex h-20 items-center justify-between">
+          <div className="flex h-16 md:h-20 items-center justify-between">
             {/* Mobile Menu Button */}
             <Button 
               variant="ghost" 
@@ -40,7 +40,7 @@ const Header = () => {
             </Button>
 
             {/* Center Logo - Fixed position */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 top-20 -translate-y-1/2 z-[60]">
+            <div className="absolute left-1/2 transform -translate-x-1/2 top-16 md:top-20 -translate-y-1/2 z-[60]">
               {/* Visual logo - non-clickable */}
               <div 
                 className="inline-block"
@@ -157,7 +157,7 @@ const Header = () => {
             backgroundColor: 'rgba(232, 234, 234, 0.98)', 
             borderColor: '#bf3d3d', 
             boxShadow: '0 4px 16px rgba(191, 61, 61, 0.25)', 
-            top: '80px'
+            top: '64px'
           }}
         >
           {/* Spacer for logo */}
