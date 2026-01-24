@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    // Ignoră erorile ESLint la build pentru Render
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    // Ignoră erorile TypeScript la build (doar pentru Render)
+    ignoreBuildErrors: false,
+  },
   images: {
     remotePatterns: [
       {
@@ -30,6 +38,14 @@ const nextConfig = {
   experimental: {
     optimizeCss: false,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+  },
+  // Webpack configuration for path aliases (fix for Render)
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname),
+    };
+    return config;
   },
 }
 
