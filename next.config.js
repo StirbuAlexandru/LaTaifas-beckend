@@ -1,13 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable static export for shared hosting
-  output: 'export',
-  // Disable image optimization for static export
+  // Render needs server-side Next.js, NOT static export
+  // Images can be optimized with sharp on Render
   images: {
-    unoptimized: true,
+    unoptimized: false,
   },
-  // Skip dynamic routes at build time - they will render client-side
-  trailingSlash: true,
   eslint: {
     // Ignoră erorile ESLint la build pentru Render
     ignoreDuringBuilds: true,
