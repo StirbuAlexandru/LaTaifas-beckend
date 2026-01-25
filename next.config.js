@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable static export for shared hosting
+  output: 'export',
+  // Disable image optimization for static export
+  images: {
+    unoptimized: true,
+  },
+  // Skip dynamic routes at build time - they will render client-side
+  trailingSlash: true,
   eslint: {
     // Ignoră erorile ESLint la build pentru Render
     ignoreDuringBuilds: true,
@@ -8,22 +16,7 @@ const nextConfig = {
     // Ignoră erorile TypeScript la build (doar pentru Render)
     ignoreBuildErrors: false,
   },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'qxcjfwqgtdfamsxsspod.supabase.co',
-        pathname: '/storage/v1/object/public/**',
-      },
-    ],
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-  },
+
   // Enable SWC minification for faster builds
   swcMinify: true,
   // Compress output for faster loading
