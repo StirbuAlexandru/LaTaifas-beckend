@@ -1,10 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Render backend - server-side rendering (NO static export)
   images: {
-    unoptimized: true,
+    unoptimized: false,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'qxcjfwqgtdfamsxsspod.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
+    formats: ['image/avif', 'image/webp'],
   },
-  trailingSlash: true,
   eslint: {
     // Ignoră erorile ESLint la build pentru Render
     ignoreDuringBuilds: true,
