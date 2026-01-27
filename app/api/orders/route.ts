@@ -162,42 +162,38 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send confirmation email if customer provided email
+    // Send confirmation email if customer provided email (non-blocking)
     if (customer_email) {
-      try {
-        await sendOrderStatusEmail({
-          to: customer_email,
-          orderNumber: orderNumber,
-          customerName: customer_name,
-          status: 'pending',
-          totalAmount: totalAmount,
-          items: orderItems,
-        });
-        console.log(`Order confirmation email sent to ${customer_email}`);
-      } catch (emailError) {
-        console.error('Failed to send order confirmation email:', emailError);
-        // Don't fail the order creation if email fails
-      }
-    }
-
-    // Send notification to restaurant
-    try {
-      await sendRestaurantNotification({
+      sendOrderStatusEmail({
+        to: customer_email,
         orderNumber: orderNumber,
         customerName: customer_name,
-        customerPhone: customer_phone,
-        customerEmail: customer_email || undefined,
-        customerAddress: customer_address,
-        deliveryNotes: delivery_notes || undefined,
-        paymentMethod: payment_method || 'cash',
+        status: 'pending',
         totalAmount: totalAmount,
         items: orderItems,
+      }).then(() => {
+        console.log(`Order confirmation email sent to ${customer_email}`);
+      }).catch((emailError) => {
+        console.error('Failed to send order confirmation email:', emailError);
       });
-      console.log(`Restaurant notification sent for order ${orderNumber}`);
-    } catch (emailError) {
-      console.error('Failed to send restaurant notification:', emailError);
-      // Don't fail the order creation if email fails
     }
+
+    // Send notification to restaurant (non-blocking)
+    sendRestaurantNotification({
+      orderNumber: orderNumber,
+      customerName: customer_name,
+      customerPhone: customer_phone,
+      customerEmail: customer_email || undefined,
+      customerAddress: customer_address,
+      deliveryNotes: delivery_notes || undefined,
+      paymentMethod: payment_method || 'cash',
+      totalAmount: totalAmount,
+      items: orderItems,
+    }).then(() => {
+      console.log(`Restaurant notification sent for order ${orderNumber}`);
+    }).catch((emailError) => {
+      console.error('Failed to send restaurant notification:', emailError);
+    });
 
     return NextResponse.json(
       {
