@@ -128,16 +128,20 @@ const ProductForm = () => {
       }
 
       // Submit to API route with image data
-      const response = await fetch(getApiUrl('api/products'), {
+      const payload = {
+        ...data,
+        // Convert empty or 'toate' category to null
+        category_id: data.category_id && data.category_id !== 'toate' && data.category_id !== '' ? data.category_id : null,
+        imageData: imageUrl, // Send base64 image
+        fileName: selectedFile?.name || null,
+      };
+      
+      const response = await fetch('/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...data,
-          imageData: imageUrl, // Send base64 image
-          fileName: selectedFile?.name || null,
-        }),
+        body: JSON.stringify(payload),
       });
 
       const result = await response.json();
