@@ -48,7 +48,7 @@ const createProductSchema = z.object({
     return isNaN(num) ? null : num;
   }).optional(),
   discountActive: z.boolean().optional(),
-  category_id: z.string().optional().nullable(),
+  category_id: z.string().optional().nullable().transform((v) => (v === '' ? null : v)),
   in_stock: z.boolean().optional(),
   image: z.string().optional().nullable(),
   imageData: z.string().optional().nullable(), // base64 image data
@@ -67,7 +67,7 @@ const updateProductSchema = z.object({
     return isNaN(num) ? null : num;
   }).optional(),
   discountActive: z.boolean().optional(),
-  category_id: z.string().optional().nullable(),
+  category_id: z.string().optional().nullable().transform((v) => (v === '' ? null : v)),
   in_stock: z.boolean().optional(),
   image: z.string().optional().nullable(),
   imageData: z.string().optional().nullable(), // base64 image data
