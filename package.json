@@ -44,18 +44,18 @@
     "tailwindcss-animate": "^1.0.7",
     "twilio": "^5.10.6",
     "uuid": "^13.0.0",
-    "zod": "^4.1.13"
+    "zod": "^4.1.13",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6"
   },
   "devDependencies": {
     "@types/node": "^20.19.25",
     "@types/nodemailer": "^7.0.4",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
-    "autoprefixer": "^10.4.16",
     "baseline-browser-mapping": "^2.9.17",
     "eslint-config-next": "16.0.10",
-    "postcss": "^8.4.32",
-    "tailwindcss": "^3.3.6",
     "typescript": "^5.3.2"
   }
 }
