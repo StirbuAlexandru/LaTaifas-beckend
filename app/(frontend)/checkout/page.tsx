@@ -66,7 +66,7 @@ export default function CheckoutPage() {
           })),
         };
 
-        const orderResponse = await fetch(getApiUrl('api/orders'), {
+        const orderResponse = await fetch('/api/orders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export default function CheckoutPage() {
         }
 
         // Create payment intent
-        const paymentResponse = await fetch(getApiUrl('api/create-payment-intent'), {
+        const paymentResponse = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ export default function CheckoutPage() {
         })),
       };
 
-      const response = await fetch(getApiUrl('api/orders'), {
+      const response = await fetch('/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -76,7 +76,7 @@ export default function CategoriesPage() {
 
     try {
       setSeeding(true);
-      const response = await fetch(getApiUrl('api/seed-categories'), {
+      const response = await fetch('/api/seed-categories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

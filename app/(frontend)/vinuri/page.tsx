@@ -90,7 +90,7 @@ const VinuriPage = () => {
   useEffect(() => {
     const fetchWines = async () => {
       try {
-        const response = await fetch(getApiUrl('api/wines?inStock=true&limit=100'));
+        const response = await fetch('/api/wines?inStock=true&limit=100');
         const result = await response.json();
 
         if (result.success) {
@@ -106,7 +106,7 @@ const VinuriPage = () => {
 
     const fetchCustomCategories = async () => {
       try {
-        const response = await fetch(getApiUrl('api/custom-wine-categories'));
+        const response = await fetch('/api/custom-wine-categories');
         const result = await response.json();
         
         if (result.success) {

@@ -14,7 +14,7 @@ export default function LogoutButton() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(getApiUrl('api/auth/logout'), {
+      const response = await fetch('/api/auth/logout', {
         method: 'POST',
       });
 

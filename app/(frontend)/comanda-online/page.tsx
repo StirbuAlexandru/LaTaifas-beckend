@@ -134,7 +134,7 @@ const ComandaOnlinePage = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(getApiUrl('api/categories'));
+      const response = await fetch('/api/categories');
       const data = await response.json();
       if (data.success) {
         setCategories(data.data || []);
@@ -146,7 +146,7 @@ const ComandaOnlinePage = () => {
 
   const fetchDeliveryZones = async () => {
     try {
-      const response = await fetch(getApiUrl('api/delivery-zones'));
+      const response = await fetch('/api/delivery-zones');
       const data = await response.json();
       if (data.success) {
         setDeliveryZones(data.data || []);
@@ -171,10 +171,10 @@ const ComandaOnlinePage = () => {
       let url;
       if (categoryId === DISCOUNTS_CATEGORY_ID) {
         // Fetch ALL products without limit for REDUCERI to ensure we catch all discounted items
-        url = getApiUrl(`api/products?page=1&limit=1000`);
+        url = `/api/products?page=1&limit=1000`;
       } else {
         // Build URL with category filter
-        url = getApiUrl(`api/products?categoryId=${categoryId}&page=${page}&limit=${productsPerPage}`);
+        url = `/api/products?categoryId=${categoryId}&page=${page}&limit=${productsPerPage}`;
       }
       
       const response = await fetch(url);

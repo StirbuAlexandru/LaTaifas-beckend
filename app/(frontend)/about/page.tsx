@@ -17,7 +17,7 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch(getApiUrl('api/location-gallery'));
+        const response = await fetch('/api/location-gallery');
         const data = await response.json();
         setLocationImages(data);
       } catch (error) {
