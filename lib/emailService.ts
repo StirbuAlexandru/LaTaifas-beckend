@@ -1,13 +1,16 @@
 import nodemailer from 'nodemailer';
 
-// Email configuration
+// Email configuration - support both SMTP_* and EMAIL_* env vars
+const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER;
+const smtpPass = process.env.SMTP_PASSWORD || process.env.EMAIL_PASS;
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
   port: parseInt(process.env.SMTP_PORT || '587'),
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
+    user: smtpUser,
+    pass: smtpPass,
   },
 });
 
@@ -298,7 +301,7 @@ export async function sendOrderStatusEmail({
     }
 
     // Skip if SMTP is not configured
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+    if (!smtpUser || !smtpPass) {
       console.warn('SMTP not configured, skipping email notification');
       return { success: true, skipped: true, reason: 'SMTP not configured' };
     }
@@ -312,7 +315,7 @@ export async function sendOrderStatusEmail({
     const html = template.html(orderNumber, customerName, totalAmount, items);
 
     await transporter.sendMail({
-      from: `"La Taifas" <${process.env.SMTP_USER}>`,
+      from: `"La Taifas" <${smtpUser}>`,
       to,
       subject,
       html,
@@ -329,7 +332,7 @@ export async function sendOrderStatusEmail({
 // Verify SMTP connection
 export async function verifyEmailConnection() {
   try {
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+    if (!smtpUser || !smtpPass) {
       return { success: false, error: 'SMTP credentials not configured' };
     }
     
@@ -367,7 +370,7 @@ export async function sendRestaurantNotification({
 }: SendRestaurantNotificationParams) {
   try {
     // Skip if SMTP is not configured
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+    if (!smtpUser || !smtpPass) {
       console.warn('SMTP not configured, skipping restaurant notification');
       return { success: true, skipped: true, reason: 'SMTP not configured' };
     }
@@ -501,7 +504,7 @@ export async function sendRestaurantNotification({
     `;
 
     await transporter.sendMail({
-      from: `"La Taifas - Notificări" <${process.env.SMTP_USER}>`,
+      from: `"La Taifas - Notificări" <${smtpUser}>`,
       to: restaurantEmail,
       subject,
       html,

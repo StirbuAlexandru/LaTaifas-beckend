@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { supabase as anonClient } from '../../../../lib/supabaseClient';
 
-// Use service role client for admin operations
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Use service role client for admin operations, fallback to anon client
+let supabase: any;
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+if (serviceRoleKey && supabaseUrl && serviceRoleKey.split('.').length === 3) {
+  supabase = createClient(supabaseUrl, serviceRoleKey);
+} else {
+  console.warn('[/api/products/[id]] Service role key not configured, using anon client');
+  supabase = anonClient;
+}
 
 // GET /api/products/[id] - get specific product
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
