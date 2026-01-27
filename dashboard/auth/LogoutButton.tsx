@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '../../components/ui/button';
+import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
+import { getApiUrl } from '@/lib/api';
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -13,7 +14,7 @@ export default function LogoutButton() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/logout', {
+      const response = await fetch(getApiUrl('api/auth/logout'), {
         method: 'POST',
       });
 

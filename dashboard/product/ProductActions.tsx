@@ -3,7 +3,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../components/ui/popover";
+} from "@/components/ui/popover";
 
 import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";

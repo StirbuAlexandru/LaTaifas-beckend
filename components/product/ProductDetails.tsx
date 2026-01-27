@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Product } from '../../types/product';
-import { Button } from '../ui/button';
+import { Product } from '@/types/product';
+import { Button } from '@/components/ui/button';
 import { Star, ShoppingCart, Minus, Plus } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
-import { calculateFinalPrice, calculateDiscountPercentage } from '../../utils/discountCalculator';
+import { useCart } from '@/context/CartContext';
+import { calculateFinalPrice, calculateDiscountPercentage } from '@/utils/discountCalculator';
+import { getApiUrl } from '@/lib/api';
 
 interface ProductDetailsProps {
   product: Product;
@@ -107,7 +108,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     }
 
     try {
-      const response = await fetch('/api/reviews', {
+      const response = await fetch(getApiUrl('api/reviews'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '../../../components/ui/button';
-import { Input } from '../../../components/ui/input';
-import { Textarea } from '../../../components/ui/textarea';
-import { Label } from '../../../components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from 'lucide-react';
 
 export default function ContactPage() {
@@ -118,7 +118,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                     <h3 className="font-bold text-lg mb-1 text-gray-900">Telefon</h3>
-                    <a href="tel:0753077063" className="text-base text-gray-600 hover:text-red-600 transition-colors font-medium">0753 077 063</a>
+                    <p className="text-base text-gray-600">0753 077 063</p>
                 </div>
               </div>
               
@@ -128,7 +128,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                     <h3 className="font-bold text-lg mb-1 text-gray-900">Email</h3>
-                    <a href="mailto:lataifas23@gmail.com" className="text-base text-gray-600 hover:text-red-600 transition-colors font-medium">lataifas23@gmail.com</a>
+                    <p className="text-base text-gray-600">lataifas23@gmail.com</p>
                 </div>
               </div>
               
@@ -270,17 +270,6 @@ export default function ContactPage() {
           </div>
         </CardContent>
         </Card>
-
-        {/* Informații Firmă - La final pe mobil conform preferințelor */}
-        <div className="mt-8 pt-6 border-t-2 border-red-100 text-center animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
-          <div className="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-2xl border-2 border-red-100 max-w-lg mx-auto shadow-sm">
-            <h4 className="font-bold text-red-600 text-lg mb-2">VINUM NOBILIS SRL</h4>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-gray-600 text-sm">
-              <span className="bg-white px-3 py-1 rounded-full border border-red-100 shadow-sm">CUI: RO45346331</span>
-              <span className="bg-white px-3 py-1 rounded-full border border-red-100 shadow-sm">Nr. Reg. Com: J33/2276/13.12.2021</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

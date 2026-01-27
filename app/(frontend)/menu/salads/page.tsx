@@ -1,6 +1,6 @@
 import React from 'react';
-import { productsData } from '../../../../data/products/productsData';
-import ProductCard from '../../../../components/frontend/menu/ProductCard';
+import { productsData } from '@/data/products/productsData';
+import ProductCard from '@/components/frontend/menu/ProductCard';
 
 export default function SaladsCategoryPage() {
   // Filter products by category - for now showing all products
@@ -16,7 +16,7 @@ export default function SaladsCategoryPage() {
       </div>
       
       {categoryProducts.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {categoryProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

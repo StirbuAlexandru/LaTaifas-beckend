@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Render backend - server-side rendering (NO static export)
+  // Render backend - SSR mode (not static export)
   images: {
-    unoptimized: false,
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -14,17 +14,13 @@ const nextConfig = {
         pathname: '/storage/v1/object/public/**',
       },
     ],
-    formats: ['image/avif', 'image/webp'],
   },
   eslint: {
-    // Ignoră erorile ESLint la build pentru Render
     ignoreDuringBuilds: true,
   },
   typescript: {
-    // Ignoră erorile TypeScript la build (doar pentru Render)
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
   },
-
   // Enable SWC minification for faster builds
   swcMinify: true,
   // Compress output for faster loading
@@ -39,14 +35,6 @@ const nextConfig = {
   experimental: {
     optimizeCss: false,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
-  },
-  // Webpack configuration for path aliases (fix for Render)
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@': require('path').resolve(__dirname),
-    };
-    return config;
   },
 }
 

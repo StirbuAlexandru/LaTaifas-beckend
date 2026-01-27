@@ -4,12 +4,13 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import type { Resolver, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
-import { supabase } from "../../lib/supabaseClient";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import { getApiUrl } from '@/lib/api';
 
 // Define the schema for form validation (aligned with Supabase schema)
 const productSchema = z.object({
@@ -127,7 +128,7 @@ const ProductForm = () => {
       }
 
       // Submit to API route with image data
-      const response = await fetch('/api/products', {
+      const response = await fetch(getApiUrl('api/products'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

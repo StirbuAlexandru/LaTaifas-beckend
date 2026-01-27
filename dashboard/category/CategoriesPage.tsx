@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import useCategories, { Category } from "../../lib/useCategories";
+import useCategories, { Category } from "@/lib/useCategories";
 import CategoryForm from "./CategoryForm";
 import CategoryTree from "./CategoryTree";
 import Link from "next/link";
-import { Button } from "../../components/ui/button";
+import { Button } from "@/components/ui/button";
+import { getApiUrl } from '@/lib/api';
 
 export default function CategoriesPage() {
   const { categories, loading, error, createCategory, updateCategory, deleteCategory, refetch } =
@@ -75,7 +76,7 @@ export default function CategoriesPage() {
 
     try {
       setSeeding(true);
-      const response = await fetch('/api/seed-categories', {
+      const response = await fetch(getApiUrl('api/seed-categories'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

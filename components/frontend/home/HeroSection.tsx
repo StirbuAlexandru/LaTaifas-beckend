@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Button } from '../../ui/button';
+import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, UtensilsCrossed, Wine } from 'lucide-react';
 import Image from 'next/image';
 

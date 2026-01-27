@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Card, CardContent } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { ChefHat, Award, Users, Heart, Truck, Calendar, Briefcase, Wine, Gift, Sparkles, Building2, ChevronDown, ChevronUp } from 'lucide-react';
+import { getApiUrl } from '@/lib/api';
 
 export default function AboutPage() {
   const [locationImages, setLocationImages] = useState<any[]>([]);
@@ -16,7 +17,7 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch('/api/location-gallery');
+        const response = await fetch(getApiUrl('api/location-gallery'));
         const data = await response.json();
         setLocationImages(data);
       } catch (error) {

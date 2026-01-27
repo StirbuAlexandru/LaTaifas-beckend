@@ -1,4 +1,4 @@
-import { DiscountType } from '../utils/discountCalculator';
+import { DiscountType } from '@/utils/discountCalculator';
 
 export interface Product {
   id: string;

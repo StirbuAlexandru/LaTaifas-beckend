@@ -2,19 +2,20 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCart } from '../../../context/CartContext';
-import { Button } from '../../../components/ui/button';
-import { Input } from '../../../components/ui/input';
-import { Label } from '../../../components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
-import { Separator } from '../../../components/ui/separator';
-import { Textarea } from '../../../components/ui/textarea';
+import { useCart } from '@/context/CartContext';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, MapPin, CreditCard, User, Loader2, ShoppingBag, Check } from 'lucide-react';
 import { Elements } from '@stripe/react-stripe-js';
-import { getStripe } from '../../../lib/stripe';
-import StripePaymentForm from '../../../components/frontend/checkout/StripePaymentForm';
+import { getStripe } from '@/lib/stripe';
+import StripePaymentForm from '@/components/frontend/checkout/StripePaymentForm';
+import { getApiUrl } from '@/lib/api';
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
@@ -65,7 +66,7 @@ export default function CheckoutPage() {
           })),
         };
 
-        const orderResponse = await fetch('/api/orders', {
+        const orderResponse = await fetch(getApiUrl('api/orders'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -80,7 +81,7 @@ export default function CheckoutPage() {
         }
 
         // Create payment intent
-        const paymentResponse = await fetch('/api/create-payment-intent', {
+        const paymentResponse = await fetch(getApiUrl('api/create-payment-intent'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -127,7 +128,7 @@ export default function CheckoutPage() {
         })),
       };
 
-      const response = await fetch('/api/orders', {
+      const response = await fetch(getApiUrl('api/orders'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

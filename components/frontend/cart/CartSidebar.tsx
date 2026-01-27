@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { useCart } from '../../../context/CartContext';
+import { useCart } from '@/context/CartContext';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '../../ui/button';
+import { Button } from '@/components/ui/button';
 import { X, ShoppingBag, Trash2, Plus, Minus } from 'lucide-react';
 
 export default function CartSidebar() {

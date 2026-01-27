@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import ProductCard from '../../../../components/frontend/menu/ProductCard';
-import { Product } from '../../../../types/product';
+import ProductCard from '@/components/frontend/menu/ProductCard';
+import { Product } from '@/types/product';
 
 export default function PizzaCategoryPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -57,7 +57,7 @@ export default function PizzaCategoryPage() {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
         </div>
       ) : products.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

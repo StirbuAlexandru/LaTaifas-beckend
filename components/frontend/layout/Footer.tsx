@@ -7,10 +7,10 @@ import { SiTiktok } from 'react-icons/si';
 const Footer = () => {
   return (
     <footer className="text-gray-700 border-t-2 backdrop-blur-sm" style={{ backgroundColor: 'rgba(232, 234, 234, 0.95)', borderTopColor: '#bf3d3d', boxShadow: '0 -4px 16px rgba(191, 61, 61, 0.25)' }}>
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {/* Despre - Full width on mobile */}
-          <div className="col-span-2 md:col-span-1">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Despre */}
+          <div>
             <h3 className="text-xl font-bold bg-gradient-to-r from-red-600 to-orange-500 text-transparent bg-clip-text mb-4">La Taifas</h3>
             <p className="text-sm mb-4 text-gray-600 leading-relaxed">
               Mâncare delicioasă livrată la ușa ta. Ingrediente proaspete, arome autentice și servicii excepționale.
@@ -27,8 +27,9 @@ const Footer = () => {
               </a>
             </div>
           </div>
+
           {/* Linkuri Rapide */}
-          <div className="col-span-1">
+          <div>
             <h4 className="text-lg font-bold text-red-600 mb-4">Linkuri Rapide</h4>
             <ul className="space-y-2.5 text-sm">
               <li>
@@ -57,8 +58,9 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+
           {/* Politici și Informații Legale */}
-          <div className="col-span-1">
+          <div>
             <h4 className="text-lg font-bold text-red-600 mb-4">Politici și Informații</h4>
             <ul className="space-y-2.5 text-sm">
               <li>
@@ -87,8 +89,9 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          {/* Informații Contact - Full width on mobile */}
-          <div className="col-span-2 md:col-span-1">
+
+          {/* Informații Contact */}
+          <div>
             <h4 className="text-lg font-bold text-red-600 mb-4">Contactează-ne</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3 text-gray-600 hover:text-red-600 transition-colors duration-300 group">
@@ -109,26 +112,43 @@ const Footer = () => {
                 </div>
                 <span>lataifas23@gmail.com</span>
               </li>
+              <li className="mt-4 pt-4 border-t-2 border-red-200">
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-xl border-2 border-red-100">
+                  <p className="font-bold text-red-600 mb-1">VINUM NOBILIS SRL</p>
+                  <p className="text-gray-600 text-xs">CUI: RO45346331</p>
+                  <p className="text-gray-600 text-xs">J33/2276/13.12.2021</p>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
+
         {/* ANPC și SOL Logos */}
         <div className="mt-8 pt-6 border-t-2" style={{ borderTopColor: '#bf3d3d' }}>
           <div className="flex justify-center items-center gap-8 flex-wrap">
             <a href="https://anpc.ro/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-all duration-300 transform hover:scale-110">
-              <Image src="/images/anpc.png" alt="ANPC" width={180} height={60} className="h-12 w-40 object-contain" />
+              <Image 
+                src="/images/anpc.png" 
+                alt="ANPC" 
+                width={120} 
+                height={60}
+                className="h-16 w-auto"
+              />
             </a>
             <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-all duration-300 transform hover:scale-110">
-              <Image src="/images/sol.png" alt="SOL" width={180} height={60} className="h-12 w-40 object-contain" />
+              <Image 
+                src="/images/sol.png" 
+                alt="SOL" 
+                width={120} 
+                height={60}
+                className="h-16 w-auto"
+              />
             </a>
           </div>
         </div>
-        {/* Bara de jos cu info firma - La final pe mobil */}
+
+        {/* Bara de jos */}
         <div className="border-t-2 mt-8 pt-6 text-sm text-center" style={{ borderTopColor: '#bf3d3d' }}>
-          <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-xl border-2 border-red-100 max-w-md mx-auto mb-4">
-            <p className="font-bold text-red-600 mb-1">VINUM NOBILIS SRL</p>
-            <p className="text-gray-600 text-xs">CUI: RO45346331 | J33/2276/13.12.2021</p>
-          </div>
           <p className="text-gray-600">Website creator: <span className="font-semibold text-red-600">Știrbu Alexandru</span>, contact: <span className="font-semibold text-red-600">alexstirbu99@gmail.com</span>.</p>
         </div>
       </div>
