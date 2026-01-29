@@ -21,7 +21,7 @@ const PopularItems = () => {
   ];
 
   return (
-    <section className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white">
+    <section className="py-8 md:py-12 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
           {/* Left Content */}
@@ -32,13 +32,17 @@ const PopularItems = () => {
               <span className="text-sm font-semibold text-red-600 uppercase tracking-wide">Despre Noi</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 text-gray-900 leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 text-gray-900 leading-tight text-center">
               De ce să alegi <span className="bg-gradient-to-r from-red-600 to-orange-500 text-transparent bg-clip-text">La Taifas</span>?
             </h2>
-            <div className="w-24 h-1.5 bg-gradient-to-r from-red-600 to-orange-500 mb-4 md:mb-6 rounded-full"></div>
+            <div className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-orange-500 mb-4 md:mb-6 rounded-full mx-auto"></div>
             
             <p className="text-gray-600 text-base md:text-lg mb-6 md:mb-10 leading-relaxed">
               Născut din visul frumos al unui prieten vechi de al vostru, Cramele Bucium, La Taifas vă așteaptă într-o locație nouă și atrăgătoare, unde puteți degusta vinuri și băuturi românești de calitate, beri și sucuri tradiționale, chiar și cafele prăjite așezat românește, toate de poveste.
+            </p>
+            
+            <p className="text-gray-600 text-base md:text-lg mb-6 md:mb-10 leading-relaxed">
+              Bucătăria noastră vă oferă o gamă variată de preparate tradiționale românești, paste proaspete făcute în casă și deserturi delicioase. Fiecare fel de mâncare este pregătit cu ingrediente proaspete și multă pasiune, pentru a vă oferi o experiență culinară de neuitat.
             </p>
             
             {/* Stats Grid - Modern Design */}

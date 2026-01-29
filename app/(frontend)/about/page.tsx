@@ -11,6 +11,7 @@ import { getApiUrl } from '@/lib/api';
 export default function AboutPage() {
   const [locationImages, setLocationImages] = useState<any[]>([]);
   const [showAllImages, setShowAllImages] = useState(false);
+  const [showAllGalleryImages, setShowAllGalleryImages] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Fetch location gallery images
@@ -103,7 +104,7 @@ export default function AboutPage() {
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold mb-1 text-gray-900 text-center">
-              Povestea <span className="bg-gradient-to-r from-red-600 to-orange-500 text-transparent bg-clip-text">Noastră</span>
+              Povestea <span className="bg-gradient-to-r from-red-600 to-orange-500 text-transparent bg-clip-text">La Taifas</span>
             </h2>
             <div className="w-32 h-2 bg-gradient-to-r from-red-600 to-orange-500 mb-3 rounded-full mx-auto"></div>
             
@@ -115,7 +116,7 @@ export default function AboutPage() {
                 Loc de relaxare cu mâncare, degustări de vinuri și bere - loco și delivery, magazin de vinuri vrac și en-détail. Și pentru a se bucura toată lumea în momente deosebite oferim și spațiu pentru evenimente mici și de familie.
               </p>
               <p>
-                Noi vrem să-i mulțumim pe cei care vor să ne spună ACASĂ. Și ceva, numai al nostru, aici și în jur pe aiurea, un magazin modest de vinuri pentru clienții zonei. Și, buni și pricepuți amfitrioni, ghizi ai locației noastre, personal atent e gajul calității noastre.
+                Noi vrem să-i mulțumim pe cei care vor să ne spună ACASĂ. Și ceva, numai al nostru, aici și în jur pe aiurea, un magazin modest de vinuri pentru clienții zonei. Și, buni și pricepuți amfitrioni, ghizi ai locației noastre, personalul atent e gajul calității noastre.
               </p>
             </div>
           </div>
@@ -287,6 +288,42 @@ export default function AboutPage() {
           )}
         </div>
 
+        {/* Partenerii Noștri Section */}
+        <div className="mb-20 md:mb-24 animate-fadeInUp" style={{ animationDelay: '0.45s' }}>
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-2 border-red-200 bg-gradient-to-br from-white to-red-50/30 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+              <CardContent className="p-10 md:p-12 text-center relative">
+                {/* Decorative corner elements */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/5 to-transparent rounded-bl-full"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-orange-500/5 to-transparent rounded-tr-full"></div>
+                
+                <div className="relative z-10">
+                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-orange-500 px-5 py-2.5 rounded-full mb-6 shadow-md">
+                    <Award className="h-5 w-5 text-white" />
+                    <span className="text-sm font-bold text-white uppercase tracking-wide">Partenerii Noștri</span>
+                  </div>
+                  
+                  <h3 className="text-3xl md:text-4xl font-bold mb-6">
+                    Colaborăm cu <span className="bg-gradient-to-r from-red-600 to-orange-500 text-transparent bg-clip-text">Cei Mai Buni</span>
+                  </h3>
+                  
+                  <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-orange-500 mx-auto rounded-full mb-8"></div>
+                  
+                  <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+                    Partenerii noștri de încredere care ne ajută să vă oferim produse și servicii de calitate superioară
+                  </p>
+                  
+                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-inner border border-red-100">
+                    <p className="text-gray-800 text-xl md:text-2xl font-semibold leading-relaxed">
+                      Domeniile Bohotin • Tuborg • Illy • Cola • Bermas
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
         {/* Alte Servicii Section - Modern */}
         <div className="mb-20 md:mb-24 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
           {/* Badge - Left Aligned */}
@@ -325,7 +362,7 @@ export default function AboutPage() {
         </div>
 
         {/* Gallery Section - Modern */}
-        <div className="mb-16 md:mb-20 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
+        <div className="mb-16 md:mb-20 animate-fadeInUp" style={{ animationDelay: '0.5s' }} id="galeria-la-taifas">
           {/* Badge - Left Aligned */}
           <div className="inline-flex items-center gap-2 bg-red-50 px-3 py-1.5 rounded-full border-2 border-red-100 mb-4">
             <Wine className="h-4 w-4 text-red-600" />
@@ -340,29 +377,77 @@ export default function AboutPage() {
             <div className="w-20 h-1.5 bg-gradient-to-r from-red-600 to-orange-500 mx-auto rounded-full"></div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {['galerie1', 'galerie2', 'galerie3', 'galerie4', 'galerie5', 'galerie6', 'galerie7', 'galerie8', 'desprenoi2', 'desprenoi3', 'desprenoi4', 'desprenoi6'].map((img, index) => (
-              <div key={index} className="relative h-[250px] md:h-[300px] rounded-2xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-500" style={{
-                border: '2px solid #fee2e2',
-                transition: 'all 0.5s ease-in-out'
+          {/* Gallery Grid with Smooth Animation */}
+          <div className="overflow-hidden">
+            <div 
+              className={`grid grid-cols-2 md:grid-cols-4 gap-4 transition-all duration-1000 ease-in-out ${
+                showAllGalleryImages ? 'opacity-100' : ''
+              }`}
+              style={{
+                maxHeight: showAllGalleryImages ? '3000px' : '650px',
+                transition: 'max-height 1s ease-in-out, opacity 0.8s ease-in-out'
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(191, 61, 61, 0.3)';
-                e.currentTarget.style.borderColor = '#ef4444';
+            >
+              {['galerie1', 'galerie2', 'galerie3', 'galerie4', 'galerie5', 'galerie6', 'galerie7', 'galerie8', 'desprenoi2', 'desprenoi3', 'desprenoi4', 'desprenoi6'].slice(0, showAllGalleryImages ? 12 : 4).map((img, index) => (
+                <div 
+                  key={index} 
+                  className={`relative h-[250px] md:h-[300px] rounded-2xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-700 ${
+                    index >= 4 && !showAllGalleryImages ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+                  }`}
+                  style={{
+                    border: '2px solid #fee2e2',
+                    transition: 'all 0.8s ease-in-out, opacity 0.8s ease-in-out, transform 0.8s ease-in-out',
+                    transitionDelay: showAllGalleryImages && index >= 4 ? `${(index - 4) * 0.1}s` : '0s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 20px 40px rgba(191, 61, 61, 0.3)';
+                    e.currentTarget.style.borderColor = '#ef4444';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '';
+                    e.currentTarget.style.borderColor = '#fee2e2';
+                  }}
+                >
+                  <Image 
+                    src={`/images/${img}.jpg`} 
+                    alt={`Galerie ${index + 1}`} 
+                    fill 
+                    className="object-cover group-hover:scale-110 transition-transform duration-500" 
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    loading={index < 4 ? 'eager' : 'lazy'}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Toggle Button */}
+          <div className="flex justify-center mt-6">
+            <Button
+              onClick={() => {
+                if (showAllGalleryImages) {
+                  const element = document.getElementById('galeria-la-taifas');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }
+                }
+                setShowAllGalleryImages(!showAllGalleryImages);
               }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '';
-                e.currentTarget.style.borderColor = '#fee2e2';
-              }}>
-                <Image 
-                  src={`/images/${img}.jpg`} 
-                  alt={`Galerie ${index + 1}`} 
-                  fill 
-                  className="object-cover group-hover:scale-110 transition-transform duration-500" 
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-              </div>
-            ))}
+              size="lg"
+              className="gap-2 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 px-8 py-6 text-base font-semibold rounded-xl"
+            >
+              {showAllGalleryImages ? (
+                <>
+                  <ChevronUp className="h-5 w-5" />
+                  Mai Puține Imagini
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="h-5 w-5" />
+                  Mai Multe Imagini
+                </>
+              )}
+            </Button>
           </div>
         </div>
       </div>

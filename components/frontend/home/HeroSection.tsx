@@ -50,17 +50,15 @@ const HeroSection = () => {
             </div>
             
             {/* Main Title */}
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 leading-tight">
-              <span className="inline-block animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
-                Mâncare Delicioasă,
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 leading-relaxed flex flex-col items-center md:items-start gap-2">
+              <span className="inline-block animate-slideInLeft ml-6 md:ml-14" style={{ animationDelay: '0.4s' }}>
+                    Mancare și Vinuri
               </span>
-              <br />
-              <span className="inline-block animate-slideInLeft" style={{ animationDelay: '0.5s' }}>
-                Vinuri De Calitate
+              <span className="inline-block bg-gradient-to-r from-red-400 via-red-300 to-red-200 text-transparent bg-clip-text animate-slideInRight ml-16 md:ml-24" style={{ animationDelay: '0.6s' }}>
+                "de Poveste"
               </span>
-              <br />
-              <span className="inline-block bg-gradient-to-r from-red-400 via-red-300 to-red-200 text-transparent bg-clip-text animate-slideInRight" style={{ animationDelay: '0.6s' }}>
-                Și Atmosferă de Vis
+              <span className="inline-block animate-slideInLeft text-center md:text-left" style={{ animationDelay: '0.7s' }}>
+                ... Acasă, lângă voi...
               </span>
             </h1>
           </div>

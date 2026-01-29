@@ -201,9 +201,9 @@ export default function CheckoutPage() {
         </Button>
         
         {/* Page Title */}
-        <div className="mb-6 md:mb-8">
+        <div className="mb-6 md:mb-8 text-center">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">Finalizează Comanda</h1>
-          <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-red-600 to-orange-500 rounded-full mt-2 md:mt-3"></div>
+          <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-red-600 to-orange-500 rounded-full mt-2 md:mt-3 mx-auto"></div>
         </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
@@ -492,7 +492,7 @@ export default function CheckoutPage() {
             </CardHeader>
             <CardContent className="space-y-2 text-sm pt-6">
               <p className="font-semibold text-base text-red-700">VINUM NOBILIS SRL</p>
-              <p><span className="font-semibold">Sediu Central:</span> Municipiul Suceava, Strada Ion Niculce, nr.5, Bloc 47, Scara B, Ap 11, Județ Suceava</p>
+              <p><span className="font-semibold">Sediu Central:</span> Municipiul Suceava, Strada Ion Neculce, nr.5, Bloc 47, Scara B, Ap 11, Județ Suceava</p>
               <p><span className="font-semibold">CUI:</span> 45346331</p>
               <p><span className="font-semibold">Reg. Com.:</span> J33/2276/13.12.2021</p>
               <p><span className="font-semibold">Activitate Principală:</span> 4634 - Comerț cu ridicata al băuturilor</p>
@@ -515,7 +515,7 @@ export default function CheckoutPage() {
             </CardHeader>
             <CardContent className="space-y-2 text-sm pt-6">
               <p className="font-semibold text-base text-red-700">VINUM NOBILIS SRL</p>
-              <p><span className="font-semibold">Sediu Central:</span> Municipiul Suceava, Strada Ion Niculce, nr.5, Bloc 47, Scara B, Ap 11, Județ Suceava</p>
+              <p><span className="font-semibold">Sediu Central:</span> Municipiul Suceava, Strada Ion Neculce, nr.5, Bloc 47, Scara B, Ap 11, Județ Suceava</p>
               <p><span className="font-semibold">CUI:</span> 45346331</p>
               <p><span className="font-semibold">Reg. Com.:</span> J33/2276/13.12.2021</p>
               <p><span className="font-semibold">Activitate Principală:</span> 4634 - Comerț cu ridicata al băuturilor</p>

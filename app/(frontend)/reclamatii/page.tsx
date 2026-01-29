@@ -150,7 +150,7 @@ export default function ReclamatiiPage() {
           <p className="font-semibold text-red-700 mb-3 text-lg">Date Identificare Societate</p>
           <p className="font-semibold text-red-600">VINUM NOBILIS SRL</p>
           <p className="text-sm mt-2">
-            <strong>Sediu Central:</strong> Municipiul Suceava, Strada Ion Niculce, nr.5, 
+            <strong>Sediu Central:</strong> Municipiul Suceava, Strada Ion Neculce, nr.5,
             Bloc 47, Scara B, Ap 11, Județul Suceava
           </p>
           <p className="text-sm"><strong>CUI:</strong> RO45346331</p>

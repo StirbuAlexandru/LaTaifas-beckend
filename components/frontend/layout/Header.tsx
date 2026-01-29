@@ -26,9 +26,9 @@ const Header = () => {
   return (
     <>
       {/* Main Header */}
-      <header className="sticky top-0 z-40 w-full border-b-2 backdrop-blur-md" style={{ backgroundColor: 'rgba(232, 234, 234, 0.95)', borderColor: '#bf3d3d', boxShadow: '0 4px 16px rgba(191, 61, 61, 0.25)' }}>
+      <header className="sticky top-0 z-40 w-full border-b backdrop-blur-md" style={{ backgroundColor: 'rgba(232, 234, 234, 0.95)', borderColor: '#bf3d3d', boxShadow: '0 4px 16px rgba(191, 61, 61, 0.25)' }}>
         <div className="container mx-auto px-4 relative">
-          <div className="flex h-20 items-center justify-between">
+          <div className="flex h-16 md:h-20 items-center justify-between">
             {/* Mobile Menu Button */}
             <Button 
               variant="ghost" 
@@ -39,8 +39,8 @@ const Header = () => {
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </Button>
 
-            {/* Center Logo - Fixed position */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 top-20 -translate-y-1/2 z-[60]">
+            {/* Center Logo - Fixed position on red line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 translate-y-1/2 z-[60]">
               {/* Visual logo - non-clickable */}
               <div 
                 className="inline-block"
@@ -157,52 +157,52 @@ const Header = () => {
             backgroundColor: 'rgba(232, 234, 234, 0.98)', 
             borderColor: '#bf3d3d', 
             boxShadow: '0 4px 16px rgba(191, 61, 61, 0.25)', 
-            top: '80px'
+            top: '64px'
           }}
         >
           {/* Spacer for logo */}
           <div className="h-8"></div>
           
           {/* Menu items */}
-          <div className="flex flex-col gap-2 py-4 px-4">
-            <Link
-              href="/comanda-online"
-              className="text-base font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
-              onClick={handleMenuToggle}
-            >
-              Comandă Online
-            </Link>
-            <Link
-              href="/menu"
-              className="text-base font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
-              onClick={handleMenuToggle}
-            >
-              Meniu
-            </Link>
-            <Link
-              href="/vinuri"
-              className="text-base font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
-              onClick={handleMenuToggle}
-            >
-              Vinuri
-            </Link>
+          <div className="flex flex-col gap-1 py-3 px-4">
             <Link
               href="/"
-              className="text-base font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
+              className="text-sm font-semibold py-2 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
               onClick={handleMenuToggle}
             >
               Acasă
             </Link>
             <Link
               href="/about"
-              className="text-base font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
+              className="text-sm font-semibold py-2 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
               onClick={handleMenuToggle}
             >
               Despre noi
             </Link>
             <Link
+              href="/menu"
+              className="text-sm font-semibold py-2 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
+              onClick={handleMenuToggle}
+            >
+              Meniu
+            </Link>
+            <Link
+              href="/vinuri"
+              className="text-sm font-semibold py-2 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
+              onClick={handleMenuToggle}
+            >
+              Vinuri
+            </Link>
+            <Link
+              href="/comanda-online"
+              className="text-sm font-semibold py-2 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
+              onClick={handleMenuToggle}
+            >
+              Comandă Online
+            </Link>
+            <Link
               href="/contact"
-              className="text-base font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
+              className="text-sm font-semibold py-2 px-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:text-red-600 hover:translate-x-2 hover:shadow-md border-2 border-transparent hover:border-red-200"
               onClick={handleMenuToggle}
             >
               Contact

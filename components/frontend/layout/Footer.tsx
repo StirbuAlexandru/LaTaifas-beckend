@@ -7,15 +7,16 @@ import { SiTiktok } from 'react-icons/si';
 const Footer = () => {
   return (
     <footer className="text-gray-700 border-t-2 backdrop-blur-sm" style={{ backgroundColor: 'rgba(232, 234, 234, 0.95)', borderTopColor: '#bf3d3d', boxShadow: '0 -4px 16px rgba(191, 61, 61, 0.25)' }}>
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {/* Despre */}
-          <div>
+          <div className="text-center">
             <h3 className="text-xl font-bold bg-gradient-to-r from-red-600 to-orange-500 text-transparent bg-clip-text mb-4">La Taifas</h3>
             <p className="text-sm mb-4 text-gray-600 leading-relaxed">
-              Mâncare delicioasă livrată la ușa ta. Ingrediente proaspete, arome autentice și servicii excepționale.
+              Mâncare delicioasă livrată la ușa ta. <br />
+              Ingrediente proaspete, arome autentice și servicii excepționale.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 justify-center">
               <a href="https://www.facebook.com/lataifasburdujeni" target="_blank" rel="noopener noreferrer" className="bg-white p-2.5 rounded-xl border-2 border-gray-200 hover:border-red-600 hover:bg-gradient-to-r hover:from-red-600 hover:to-red-700 hover:text-white transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 shadow-sm hover:shadow-md" aria-label="Facebook">
                 <Facebook size={20} />
               </a>
@@ -28,66 +29,69 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Linkuri Rapide */}
-          <div>
-            <h4 className="text-lg font-bold text-red-600 mb-4">Linkuri Rapide</h4>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/menu" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                  Meniul Nostru
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                  Despre Noi
-                </Link>
-              </li>
-              <li>
-                <Link href="/comanda-online" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                  Comandă Online
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Linkuri + Politici */}
+          <div className="grid grid-cols-2 gap-4">
+            {/* Linkuri Rapide */}
+            <div>
+              <h4 className="text-lg font-bold text-red-600 mb-4">Linkuri Rapide</h4>
+              <ul className="space-y-2.5 text-sm">
+                <li>
+                  <Link href="/menu" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
+                    <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                    Meniul Nostru
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
+                    <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                    Despre Noi
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/comanda-online" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
+                    <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                    Comandă Online
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
+                    <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-          {/* Politici și Informații Legale */}
-          <div>
-            <h4 className="text-lg font-bold text-red-600 mb-4">Politici și Informații</h4>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/privacy-policy" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                  Politica de Confidențialitate
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                  Termeni și Condiții
-                </Link>
-              </li>
-              <li>
-                <Link href="/cookies" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                  Politica Cookies
-                </Link>
-              </li>
-              <li>
-                <Link href="/reclamatii" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                  Formula de Reclamații
-                </Link>
-              </li>
-            </ul>
+            {/* Politici și Informații Legale */}
+            <div>
+              <h4 className="text-lg font-bold text-red-600 mb-4">Politici și Informații</h4>
+              <ul className="space-y-2.5 text-sm">
+                <li>
+                  <Link href="/privacy-policy" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
+                    <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                    Politica de Confidențialitate
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
+                    <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                    Termeni și Condiții
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/cookies" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
+                    <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                    Politica Cookies
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/reclamatii" className="text-gray-600 hover:text-red-600 transition-all duration-300 hover:translate-x-2 inline-flex items-center gap-2 group">
+                    <span className="w-1.5 h-1.5 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                    Formula de Reclamații
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* Informații Contact */}
@@ -124,32 +128,27 @@ const Footer = () => {
         </div>
 
         {/* ANPC și SOL Logos */}
-        <div className="mt-8 pt-6 border-t-2" style={{ borderTopColor: '#bf3d3d' }}>
+        <div className="mt-6 pt-4 border-t-2" style={{ borderTopColor: '#bf3d3d' }}>
           <div className="flex justify-center items-center gap-8 flex-wrap">
             <a href="https://anpc.ro/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-all duration-300 transform hover:scale-110">
               <Image 
                 src="/images/anpc.png" 
                 alt="ANPC" 
-                width={120} 
-                height={60}
-                className="h-16 w-auto"
+                width={150} 
+                height={75}
+                className="h-20 w-40 md:h-24 md:w-48 object-contain"
               />
             </a>
             <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-all duration-300 transform hover:scale-110">
               <Image 
                 src="/images/sol.png" 
                 alt="SOL" 
-                width={120} 
-                height={60}
-                className="h-16 w-auto"
+                width={150} 
+                height={75}
+                className="h-20 w-40 md:h-24 md:w-48 object-contain"
               />
             </a>
           </div>
-        </div>
-
-        {/* Bara de jos */}
-        <div className="border-t-2 mt-8 pt-6 text-sm text-center" style={{ borderTopColor: '#bf3d3d' }}>
-          <p className="text-gray-600">Website creator: <span className="font-semibold text-red-600">Știrbu Alexandru</span>, contact: <span className="font-semibold text-red-600">alexstirbu99@gmail.com</span>.</p>
         </div>
       </div>
     </footer>

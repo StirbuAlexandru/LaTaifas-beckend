@@ -4,6 +4,7 @@ import HeroSection from '@/components/frontend/home/HeroSection';
 import EventsSection from '@/components/frontend/home/EventsSection';
 import FeaturedProducts from '@/components/frontend/home/FeaturedProducts';
 import PopularItems from '@/components/frontend/home/PopularItems';
+import DeliveryPartners from '@/components/frontend/home/DeliveryPartners';
 
 export const metadata: Metadata = {
   title: 'Acasă',
@@ -22,6 +23,7 @@ export default function HomePage() {
       <EventsSection />
       <FeaturedProducts />
       <PopularItems />
+      <DeliveryPartners />
     </div>
   );
 }
