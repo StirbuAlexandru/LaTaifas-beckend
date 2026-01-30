@@ -40,7 +40,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 py-2 md:py-3 relative z-10">
         <div className="max-w-4xl">
           {/* Animated Badge */}
-          <div className="mb-4 md:mb-8 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+          <div className="mb-4 md:mb-8 animate-fadeInUp flex flex-col items-center md:items-start" style={{ animationDelay: '0.2s' }}>
             <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border-2 border-white/20 shadow-2xl mb-4">
               <div className="relative">
                 <UtensilsCrossed className="h-8 w-8 md:h-10 md:w-10 animate-pulse" />
@@ -51,10 +51,10 @@ const HeroSection = () => {
             
             {/* Main Title */}
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 leading-relaxed flex flex-col items-center md:items-start gap-2">
-              <span className="inline-block animate-slideInLeft ml-6 md:ml-14" style={{ animationDelay: '0.4s' }}>
+              <span className="inline-block animate-slideInLeft text-center md:text-left md:ml-14" style={{ animationDelay: '0.4s' }}>
                     Mancare și Vinuri
               </span>
-              <span className="inline-block bg-gradient-to-r from-red-400 via-red-300 to-red-200 text-transparent bg-clip-text animate-slideInRight ml-16 md:ml-24" style={{ animationDelay: '0.6s' }}>
+              <span className="inline-block bg-gradient-to-r from-red-400 via-red-300 to-red-200 text-transparent bg-clip-text animate-slideInRight text-center md:text-left md:ml-24" style={{ animationDelay: '0.6s' }}>
                 "de Poveste"
               </span>
               <span className="inline-block animate-slideInLeft text-center md:text-left" style={{ animationDelay: '0.7s' }}>
