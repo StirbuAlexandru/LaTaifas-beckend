@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/dashboard/', '/api/'],
     },
-    sitemap: 'https://lataifas-suceava.ro/sitemap.xml',
+    sitemap: 'https://www.lataifas-suceava.ro/sitemap.xml',
   };
 }

@@ -1,12 +1,13 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://lataifas-suceava.ro';
+  const baseUrl = 'https://www.lataifas-suceava.ro';
 
   // Static routes
   const routes = [
     '',
     '/comanda-online',
+    '/menu',
     '/vinuri',
     '/about',
     '/contact',

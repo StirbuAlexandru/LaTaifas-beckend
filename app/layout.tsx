@@ -2,11 +2,15 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 
 const inter = Inter({ subsets: ['latin'] })
 
+// Google Analytics Measurement ID
+const GA_MEASUREMENT_ID = 'G-46H17N1SR9';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lataifas-suceava.ro'),
+  metadataBase: new URL('https://www.lataifas-suceava.ro'),
   title: {
     default: 'La Taifas - Restaurant și Terasă în Suceava | Livrare la Domiciliu',
     template: '%s | La Taifas'
@@ -28,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ro_RO',
-    url: 'https://lataifas-suceava.ro',
+    url: 'https://www.lataifas-suceava.ro',
     siteName: 'La Taifas Restaurant',
     title: 'La Taifas - Restaurant și Terasă în Suceava',
     description: 'Restaurant La Taifas în Suceava - mâncare tradițională românească, pizza, paste, vinuri selectate. Comandă online cu livrare la domiciliu.',
@@ -59,7 +63,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: 'x0Ch3cYKCcmaq_fDSKnDwMIBWxuquDZC3V9pKSxTtfs',
   },
 }
 
@@ -71,6 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
+        <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
