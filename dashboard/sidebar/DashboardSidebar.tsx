@@ -8,7 +8,6 @@ import {
   Layers,
   Star,
   Mail,
-  Menu,
   Wine,
   MapPin,
   UtensilsCrossed,
@@ -45,12 +44,6 @@ const DashboardSidebar = () => {
       label: "Vinuri",
       icon: <Wine size={20} />,
       isActive: pathname.includes("dashboard/wines"),
-    },
-    {
-      link: "/dashboard/menu-products",
-      label: "Produse din Meniu",
-      icon: <Menu size={20} />,
-      isActive: pathname.includes("dashboard/menu-products"),
     },
     {
       link: "/dashboard/categories",
