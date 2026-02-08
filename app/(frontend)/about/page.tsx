@@ -131,13 +131,13 @@ export default function AboutPage() {
             
             <div className="space-y-2 text-gray-700 leading-relaxed text-base">
               <p>
-                <span className="font-bold text-red-600">La Taifas</span>, locul unde foamea, setea sau grijile se sting la un taifas cu prietenii. Ulterior și la gândul bun al celor ce l-au privit cu drag, a luat acel ceva al locului și a căpătat caracteristici de restaurant fast-food cu terasă permanentă.
+                <span className="font-bold text-red-600">La Taifas</span>, a fost locația noastră de suflet, creată cu gândul de a fi oferită celor care tânjeau în zona Burdujeniului după un loc în care să-i spună ACASĂ. Ulterior și la gândul bun al celor ce l-au privit cu drag, a luat acel ceva al locului și a căpătat caracteristici de restaurant fast-food cu terasă permanentă.
               </p>
               <p>
                 Loc de relaxare cu mâncare, degustări de vinuri și bere - loco și delivery, magazin de vinuri vrac și en-détail. Și pentru a se bucura toată lumea în momente deosebite oferim și spațiu pentru evenimente mici și de familie.
               </p>
               <p>
-                Noi vrem să-i mulțumim pe cei care vor să ne spună ACASĂ. Și ceva, numai al nostru, aici și în jur pe aiurea, un magazin modest de vinuri pentru clienții zonei. Și, buni și pricepuți amfitrioni, ghizi ai locației noastre, personalul atent e gajul calității noastre.
+                Noi vrem să-i mulțumim pe cei care vor să ne spună ACASĂ. Și ceva, numai al nostru, aici și în jur pe aiurea, un magazin modest de vinuri pentru clienții zonei. Și, buni și pricepuți anfitrioni, ghizi ai locației noastre, personal atent e gajul calității noastre.
               </p>
             </div>
           </div>
@@ -202,13 +202,10 @@ export default function AboutPage() {
             
             <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
               <p>
-                … un magazin rafinat de vinuri… și … paste și pizza – ceva mai bune, poate, chiar și decât în bucătăriile italiene, <span className="text-red-600 font-semibold">platouri de evenimente și de moment</span>, …, grătare românești dar și cu <span className="text-red-600 font-semibold">staif</span>, <span className="text-red-600 font-semibold">chiar și produse de post</span>
+                La restaurantul fast food din rascrucea Burdujeniului preparate de baza sunt: <span className="font-semibold text-red-600">ciorbe, salate aperitive, preparate traditionale, deserturi inspirate, paste si pizza</span>, ceva mai bune decat in orasele italiene, platouri de moment dar si pentru evenimente, gratare romanesti si produse de post.
               </p>
               <p>
-                La restaurantul fast food din răscruce Burdujeniului preparate de bază sunt: <span className="font-semibold text-red-600">ciorbe, salate aperitive, preparate tradiționale, deserturi inspirate, paste și pizza</span>, ceva mai bune decât în orașele italiene, platouri de moment dar și pentru evenimente, grătare românești și produse de post.
-              </p>
-              <p>
-                Și cum, bucătarul e sufletul unui loc în care se oferă mâncare, ne mândrim, fără modestie, cu bucătarii noștri.
+                Si cum, bucatarul e sufletul unui loc in care se ofera mancare, ne mandrim, fara modestie, cu bucatarii nostrii.
               </p>
             </div>
             

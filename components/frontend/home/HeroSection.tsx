@@ -72,25 +72,37 @@ const HeroSection = () => {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-3">
-              <Button 
+            <div className="flex flex-col md:flex-row flex-wrap gap-3">
+              <div className="flex flex-row gap-2 md:gap-3">
+                <Button
+                  asChild 
+                  size="lg" 
+                  className="gap-1 md:gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 group px-4 py-3 text-sm md:text-base md:px-6 md:py-4 flex-1 md:flex-none"
+                >
+                  <Link href="/comanda-online?category=REDUCERI">
+                    <Sparkles className="h-3 w-3 md:h-4 md:w-4" />
+                    Reduceri comenzi
+                    <ArrowRight className="h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild 
+                  size="lg" 
+                  className="gap-1 md:gap-2 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white border-0 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 group px-4 py-3 text-sm md:text-base md:px-6 md:py-4 font-semibold uppercase flex-1 md:flex-none"
+                >
+                  <Link href="/evenimente">
+                    Evenimente
+                    <ArrowRight className="h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+              </div>
+              <Button
                 asChild 
                 size="lg" 
-                className="gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 group px-6 py-4 text-base"
-              >
-                <Link href="/comanda-online?category=REDUCERI">
-                  <Sparkles className="h-4 w-4" />
-                  Reduceri comenzi
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-              <Button 
-                asChild 
-                size="lg" 
-                className="gap-2 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 hover:bg-white hover:text-red-600 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-6 py-4 text-base"
+                className="gap-2 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 hover:bg-white hover:text-red-600 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-6 py-4 text-base w-full md:w-auto"
               >
                 <a href="#events">
-                  Rezervări
+                  Rezervări Evenimente Private
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </Button>

@@ -71,6 +71,12 @@ const DashboardSidebar = () => {
       isActive: pathname.includes("dashboard/event-gallery"),
     },
     {
+      link: "/dashboard/evenimente",
+      label: "Evenimente",
+      icon: <Calendar size={20} />,
+      isActive: pathname.includes("dashboard/evenimente"),
+    },
+    {
       link: "/dashboard/menu-manager",
       label: "Meniu",
       icon: <UtensilsCrossed size={20} />,
