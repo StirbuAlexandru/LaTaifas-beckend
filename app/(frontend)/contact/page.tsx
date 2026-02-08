@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -62,15 +63,8 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Hero Section - Modern */}
-      <section className="relative py-16 md:py-20 pt-24 md:pt-28 overflow-hidden">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-red-50/30 to-orange-50/20"></div>
-        
-        {/* Decorative subtle elements */}
-        <div className="absolute top-10 right-10 w-96 h-96 bg-red-100/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-80 h-80 bg-orange-100/20 rounded-full blur-3xl"></div>
-        
-        <div className="container mx-auto px-4 text-center relative z-10">
+      <section className="relative py-16 md:py-20 pt-24 md:pt-28">
+        <div className="container mx-auto px-4 text-center">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full border-2 border-red-200 shadow-sm mb-6 animate-fadeInUp">
             <MessageCircle className="h-4 w-4 text-red-600" />
@@ -83,7 +77,7 @@ export default function ContactPage() {
           <div className="w-24 h-1.5 bg-gradient-to-r from-red-600 to-orange-500 mx-auto mb-6 rounded-full"></div>
           
           <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
-            Ai întrebări sau feedback? Ne-ar plăcea să te auzim. Contactează-ne prin oricare dintre <span className="font-semibold text-red-600">canalele de mai jos</span>.
+            … Contactează-ne folosind oricare dintre variantele de mai jos…
           </p>
         </div>
       </section>
@@ -108,7 +102,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                     <h3 className="font-bold text-lg mb-1 text-gray-900">Adresă</h3>
-                    <p className="text-base text-gray-600">Calea Unirii, Burdujeni, nr 80, Suceava, Romania</p>
+                    <p className="text-base text-gray-600">Calea Unirii, nr. 80, Burdujeni, mun. Suceava, Romania</p>
                 </div>
               </div>
               
@@ -265,7 +259,7 @@ export default function ContactPage() {
           <div className="flex items-center gap-2 mt-6 p-4 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl border-2 border-red-100">
             <MapPin className="h-5 w-5 text-red-600 flex-shrink-0" />
             <p className="text-base text-gray-700 font-medium">
-              Calea Unirii, Burdujeni, nr 80, Suceava, Romania
+              Calea Unirii, nr. 80, Burdujeni, mun. Suceava, Romania
             </p>
           </div>
         </CardContent>

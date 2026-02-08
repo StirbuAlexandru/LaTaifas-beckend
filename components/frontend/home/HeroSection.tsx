@@ -80,7 +80,7 @@ const HeroSection = () => {
               >
                 <Link href="/comanda-online?category=REDUCERI">
                   <Sparkles className="h-4 w-4" />
-                  Reduceri
+                  Reduceri comenzi
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>

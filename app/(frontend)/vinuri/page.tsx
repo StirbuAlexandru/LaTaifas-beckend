@@ -48,7 +48,7 @@ const VinuriPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState('all');
   const [selectedSweetness, setSelectedSweetness] = useState('all');
-  const [selectedCustomCategory, setSelectedCustomCategory] = useState('all');
+  const [selectedEffervescence, setSelectedEffervescence] = useState('all');
   const { addToCart } = useCart();
 
   const handleAddToCart = (wine: Wine, e: React.MouseEvent) => {
@@ -134,15 +134,13 @@ const VinuriPage = () => {
       filtered = filtered.filter(wine => wine.sweetness === selectedSweetness);
     }
 
-    // Filter by custom category
-    if (selectedCustomCategory !== 'all') {
-      filtered = filtered.filter(wine => 
-        wine.customWineCategoryId === selectedCustomCategory
-      );
+    // Filter by effervescence
+    if (selectedEffervescence !== 'all') {
+      filtered = filtered.filter(wine => wine.customWineCategoryId === selectedEffervescence);
     }
 
     setFilteredWines(filtered);
-  }, [selectedColor, selectedSweetness, selectedCustomCategory, wines]);
+  }, [selectedColor, selectedSweetness, selectedEffervescence, wines]);
 
   const getWineTypeLabel = (type?: string) => {
     const labels: Record<string, string> = {
@@ -262,55 +260,51 @@ const VinuriPage = () => {
               <div className="flex flex-col md:flex-row gap-2 flex-1">
                 {/* Color Filter */}
                 <div className="flex-1 min-w-0">
-                  <label className="md:hidden text-[10px] font-semibold text-white/80 mb-1 block uppercase tracking-wider">Culoare</label>
+                  <label className="text-[10px] font-semibold text-white/80 mb-1 block uppercase tracking-wider">Culoare</label>
                   <Select value={selectedColor} onValueChange={setSelectedColor}>
                     <SelectTrigger className="w-full bg-white/95 hover:bg-white h-8 text-xs md:text-sm border-0 shadow-sm hover:shadow-md transition-all">
                       <SelectValue placeholder="Culoare" />
                     </SelectTrigger>
                     <SelectContent className="bg-white dark:bg-white">
                       <SelectItem value="all" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">✨ Toate</SelectItem>
-                      <SelectItem value="red" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍷 Roșu</SelectItem>
                       <SelectItem value="white" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🥂 Alb</SelectItem>
-                      <SelectItem value="rose" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🌸 Rose</SelectItem>
+                      <SelectItem value="rose" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🌸 Roze</SelectItem>
+                      <SelectItem value="red" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍷 Roșu</SelectItem>
+                      <SelectItem value="orange" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍊 Orange</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 {/* Sweetness Filter */}
                 <div className="flex-1 min-w-0">
-                  <label className="md:hidden text-[10px] font-semibold text-white/80 mb-1 block uppercase tracking-wider">Dulceață</label>
+                  <label className="text-[10px] font-semibold text-white/80 mb-1 block uppercase tracking-wider">Conținut de zahăr</label>
                   <Select value={selectedSweetness} onValueChange={setSelectedSweetness}>
                     <SelectTrigger className="w-full bg-white/95 hover:bg-white h-8 text-xs md:text-sm border-0 shadow-sm hover:shadow-md transition-all">
-                      <SelectValue placeholder="Dulceață" />
+                      <SelectValue placeholder="Conținut de zahăr" />
                     </SelectTrigger>
                     <SelectContent className="bg-white dark:bg-white">
                       <SelectItem value="all" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">✨ Toate</SelectItem>
-                      <SelectItem value="dulce" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍯 Dulce</SelectItem>
-                      <SelectItem value="demidulce" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🌿 Demidulce</SelectItem>
-                      <SelectItem value="demisec" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍃 Demisec</SelectItem>
                       <SelectItem value="sec" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🌱 Sec</SelectItem>
+                      <SelectItem value="demisec" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍃 Demisec</SelectItem>
+                      <SelectItem value="demidulce" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🌿 Demidulce</SelectItem>
+                      <SelectItem value="dulce" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍯 Dulce</SelectItem>
+                      <SelectItem value="licoros" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🥃 Licoros</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                {/* Custom Category Filter */}
+                {/* Effervescence Filter */}
                 <div className="flex-1 min-w-0">
-                  <label className="md:hidden text-[10px] font-semibold text-white/80 mb-1 block uppercase tracking-wider">Tipuri</label>
-                  <Select value={selectedCustomCategory} onValueChange={setSelectedCustomCategory}>
+                  <label className="text-[10px] font-semibold text-white/80 mb-1 block uppercase tracking-wider">Efervescență</label>
+                  <Select value={selectedEffervescence} onValueChange={setSelectedEffervescence}>
                     <SelectTrigger className="w-full bg-white/95 hover:bg-white h-8 text-xs md:text-sm border-0 shadow-sm hover:shadow-md transition-all">
-                      <SelectValue placeholder="Tipuri" />
+                      <SelectValue placeholder="Efervescență" />
                     </SelectTrigger>
                     <SelectContent className="bg-white dark:bg-white">
                       <SelectItem value="all" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">✨ Toate</SelectItem>
-                      {customCategories.map((category) => (
-                        <SelectItem 
-                          key={category.id} 
-                          value={category.id}
-                          className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400"
-                        >
-                          {category.name}
-                        </SelectItem>
-                      ))}
+                      <SelectItem value="linistite" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍷 Liniștite</SelectItem>
+                      <SelectItem value="spumoase" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🥂 Spumoase</SelectItem>
+                      <SelectItem value="perlante" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">✨ Perlante</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -379,15 +373,14 @@ const VinuriPage = () => {
                     )}
 
                     {/* Image */}
-                    <div className="relative w-full aspect-[4/5] bg-gray-100 overflow-hidden flex-shrink-0">
+                    <div className="relative w-full aspect-[4/5] bg-white overflow-hidden flex-shrink-0 flex items-center justify-center p-4">
                       {wine.image ? (
                         <Image
                           src={wine.image}
                           alt={wine.name}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                          style={{ objectPosition: 'top' }}
+                          className="object-contain group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         <div className="flex items-center justify-center h-full">

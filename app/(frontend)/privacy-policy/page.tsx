@@ -53,7 +53,7 @@ export default function PrivacyPolicyPage() {
                   <p>Operatorul responsabil cu prelucrarea datelor este:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                     <p><strong>Nume:</strong> VINUM NOBILIS SRL</p>
-                    <p><strong>Sediu Central:</strong> Municipiul Suceava, Strada Ion Neculce, nr.5, Bloc 47, Scara B, Ap 11, Județul Suceava</p>
+                    <p><strong>Sediu social:</strong> mun. Suceava, str. I. Neculce, nr. 5, jud. Suceava</p>
                     <p><strong>CUI:</strong> RO45346331</p>
                     <p><strong>Reg. Com.:</strong> J33/2276/13.12.2021</p>
                     <p><strong>Activitate Principală:</strong> 4634 - Comerț cu ridicata al băuturilor</p>

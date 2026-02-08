@@ -12,6 +12,7 @@ import {
   MapPin,
   UtensilsCrossed,
   Image,
+  Calendar,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -62,6 +63,12 @@ const DashboardSidebar = () => {
       label: "Galerie Locație",
       icon: <Image size={20} />,
       isActive: pathname.includes("dashboard/location-gallery"),
+    },
+    {
+      link: "/dashboard/event-gallery",
+      label: "Galerie Evenimente",
+      icon: <Calendar size={20} />,
+      isActive: pathname.includes("dashboard/event-gallery"),
     },
     {
       link: "/dashboard/menu-manager",

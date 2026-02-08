@@ -66,30 +66,51 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      {/* Hero Section - Clean & Elegant with Subtle Background */}
-      <section className="relative py-20 md:py-24 pt-28 md:pt-32 overflow-hidden">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-red-50/30 to-orange-50/20"></div>
+      {/* Hero Section - Clean & Elegant with Background Image */}
+      <section className="relative py-36 md:py-44 pt-28 md:pt-32 overflow-hidden min-h-[600px] md:min-h-[700px]">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/contact.jpg"
+            alt="La Taifas Background"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
+        </div>
         
-        {/* Decorative subtle elements */}
-        <div className="absolute top-10 right-10 w-96 h-96 bg-red-100/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-80 h-80 bg-orange-100/20 rounded-full blur-3xl"></div>
-        
-        <div className="container mx-auto px-4 text-center relative z-10">
+        <div className="container mx-auto px-4 relative z-10">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full border-2 border-red-200 shadow-sm mb-6 animate-fadeInUp">
-            <Building2 className="h-4 w-4 text-red-600" />
-            <span className="text-sm font-semibold text-red-600 uppercase tracking-wide">Povestea Noastră</span>
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-5 py-2.5 rounded-full border-2 border-white/20 shadow-lg mb-4 animate-fadeInUp">
+            <Building2 className="h-5 w-5 text-white" />
+            <span className="text-sm font-bold text-white uppercase tracking-wider">Povestea Noastră</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
-            Despre <span className="text-red-600">La Taifas</span>
-          </h1>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-red-600 to-orange-500 mx-auto mb-8 rounded-full"></div>
-          
-          <p className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
-            Locația noastră de suflet, creată cu gândul de a fi oferită celor care tânjeau în zona Burdujeniului după un loc în care să-i spună <span className="font-bold text-red-600">ACASĂ</span>.
-          </p>
+          <div className="text-center">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-8 text-white drop-shadow-2xl animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
+              Despre <span className="text-red-500 drop-shadow-[0_0_30px_rgba(239,68,68,0.5)]">La Taifas</span>
+            </h1>
+            <div className="w-32 h-2 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 mx-auto mb-10 rounded-full shadow-lg shadow-red-500/50"></div>
+            
+            <p className="text-xl md:text-2xl lg:text-3xl text-white font-semibold max-w-4xl mx-auto leading-relaxed drop-shadow-xl animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+              Locul unde foamea, setea sau grijile se sting la un taifas cu prietenii
+            </p>
+          </div>
+        </div>
+        
+        {/* Smooth Transition Wave */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 md:h-20">
+          <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0 C300,60 600,60 900,30 C1050,15 1125,0 1200,0 L1200,120 L0,120 Z" fill="#ffffff" opacity="0.9"/>
+            <path d="M0,20 C300,80 600,80 900,50 C1050,35 1125,20 1200,20 L1200,120 L0,120 Z" fill="#ffffff"/>
+          </svg>
+        </div>
+        
+        {/* White Shadow at Bottom - Oval Shape */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-radial from-transparent via-white/20 to-white/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/40 to-transparent"></div>
         </div>
       </section>
 
@@ -110,7 +131,7 @@ export default function AboutPage() {
             
             <div className="space-y-2 text-gray-700 leading-relaxed text-base">
               <p>
-                <span className="font-bold text-red-600">La Taifas</span>, a fost locația noastră de suflet, creată cu gândul de a fi oferită celor care tânjeau în zona Burdujeniului după un loc în care să-i spună <span className="font-semibold text-red-600">ACASĂ</span>. Ulterior și la gândul bun al celor ce l-au privit cu drag, a luat acel ceva al locului și a căpătat caracteristici de restaurant fast-food cu terasă permanentă.
+                <span className="font-bold text-red-600">La Taifas</span>, locul unde foamea, setea sau grijile se sting la un taifas cu prietenii. Ulterior și la gândul bun al celor ce l-au privit cu drag, a luat acel ceva al locului și a căpătat caracteristici de restaurant fast-food cu terasă permanentă.
               </p>
               <p>
                 Loc de relaxare cu mâncare, degustări de vinuri și bere - loco și delivery, magazin de vinuri vrac și en-détail. Și pentru a se bucura toată lumea în momente deosebite oferim și spațiu pentru evenimente mici și de familie.
@@ -180,6 +201,9 @@ export default function AboutPage() {
             </div>
             
             <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
+              <p>
+                … un magazin rafinat de vinuri… și … paste și pizza – ceva mai bune, poate, chiar și decât în bucătăriile italiene, <span className="text-red-600 font-semibold">platouri de evenimente și de moment</span>, …, grătare românești dar și cu <span className="text-red-600 font-semibold">staif</span>, <span className="text-red-600 font-semibold">chiar și produse de post</span>
+              </p>
               <p>
                 La restaurantul fast food din răscruce Burdujeniului preparate de bază sunt: <span className="font-semibold text-red-600">ciorbe, salate aperitive, preparate tradiționale, deserturi inspirate, paste și pizza</span>, ceva mai bune decât în orașele italiene, platouri de moment dar și pentru evenimente, grătare românești și produse de post.
               </p>
@@ -313,10 +337,54 @@ export default function AboutPage() {
                     Partenerii noștri de încredere care ne ajută să vă oferim produse și servicii de calitate superioară
                   </p>
                   
-                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-inner border border-red-100">
-                    <p className="text-gray-800 text-xl md:text-2xl font-semibold leading-relaxed">
-                      Domeniile Bohotin • Tuborg • Illy • Cola • Bermas
-                    </p>
+                  <div className="relative">
+                    {/* Decorative glow effect */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-red-600 via-orange-500 to-red-600 rounded-3xl md:rounded-full blur-xl opacity-20"></div>
+                    
+                    {/* Mobile: Grid 2x3, Desktop: Horizontal Row */}
+                    <div className="relative">
+                      {/* Mobile Grid */}
+                      <div className="md:hidden grid grid-cols-2 gap-6 bg-gradient-to-br from-white via-red-50/30 to-orange-50/30 backdrop-blur-sm rounded-3xl px-8 py-10 shadow-xl border-2 border-white/50">
+                        <div className="flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                          <Image src="/images/tuborg.png" alt="Tuborg" width={140} height={70} className="object-contain drop-shadow-md" />
+                        </div>
+                        <div className="flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                          <Image src="/images/Domeniile_Bohotin.png" alt="Domeniile Bohotin" width={90} height={45} className="object-contain drop-shadow-md" />
+                        </div>
+                        <div className="flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                          <Image src="/images/bermas.png" alt="Bermas" width={90} height={45} className="object-contain drop-shadow-md" />
+                        </div>
+                        <div className="flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                          <Image src="/images/illy.png" alt="Illy" width={90} height={45} className="object-contain drop-shadow-md" />
+                        </div>
+                        <div className="col-span-2 flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                          <Image src="/images/cola.png" alt="Coca Cola" width={160} height={80} className="object-contain drop-shadow-md" />
+                        </div>
+                      </div>
+                      
+                      {/* Desktop Horizontal */}
+                      <div className="hidden md:flex items-center justify-center gap-8 bg-gradient-to-br from-white via-red-50/30 to-orange-50/30 backdrop-blur-sm rounded-full px-10 py-6 shadow-xl border-2 border-white/50">
+                        <div className="transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">
+                          <Image src="/images/tuborg.png" alt="Tuborg" width={180} height={90} className="object-contain drop-shadow-md" />
+                        </div>
+                        <div className="h-20 w-0.5 bg-gradient-to-b from-transparent via-red-400 to-transparent"></div>
+                        <div className="transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">
+                          <Image src="/images/Domeniile_Bohotin.png" alt="Domeniile Bohotin" width={100} height={50} className="object-contain drop-shadow-md" />
+                        </div>
+                        <div className="h-20 w-0.5 bg-gradient-to-b from-transparent via-red-400 to-transparent"></div>
+                        <div className="transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">
+                          <Image src="/images/bermas.png" alt="Bermas" width={100} height={50} className="object-contain drop-shadow-md" />
+                        </div>
+                        <div className="h-20 w-0.5 bg-gradient-to-b from-transparent via-red-400 to-transparent"></div>
+                        <div className="transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">
+                          <Image src="/images/illy.png" alt="Illy" width={100} height={50} className="object-contain drop-shadow-md" />
+                        </div>
+                        <div className="h-20 w-0.5 bg-gradient-to-b from-transparent via-red-400 to-transparent"></div>
+                        <div className="transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">
+                          <Image src="/images/cola.png" alt="Coca Cola" width={240} height={120} className="object-contain drop-shadow-md" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>

@@ -139,7 +139,7 @@ const Footer = () => {
                 className="h-20 w-40 md:h-24 md:w-48 object-contain"
               />
             </a>
-            <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-all duration-300 transform hover:scale-110">
+            <a href="https://consumer-redress.ec.europa.eu/site-relocation_en" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-all duration-300 transform hover:scale-110">
               <Image 
                 src="/images/sol.png" 
                 alt="SOL" 

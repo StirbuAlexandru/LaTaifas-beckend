@@ -1,26 +1,45 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Phone, ChevronDown, ChevronUp, Users, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+interface EventImage {
+  id: string;
+  image_url: string;
+  alt_text: string;
+  display_order: number;
+  is_primary: boolean;
+}
+
 const EventsSection = () => {
   const [showMoreImages, setShowMoreImages] = useState(false);
-  
-  const eventImages = [
-    { src: '/images/evenimente1.jpg', alt: 'Eveniment 1' },
-    { src: '/images/evenimente2.jpg', alt: 'Eveniment 2' },
-    { src: '/images/evenimente3.jpg', alt: 'Eveniment 3' },
-    { src: '/images/evenimente4.jpg', alt: 'Eveniment 4' },
-  ];
+  const [eventImages, setEventImages] = useState<EventImage[]>([]);
+  const [moreEventImages, setMoreEventImages] = useState<EventImage[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const moreEventImages = [
-    { src: '/images/5.jpg', alt: 'Eveniment 5' },
-    { src: '/images/6.jpg', alt: 'Eveniment 6' },
-    { src: '/images/7.jpg', alt: 'Eveniment 7' },
-    { src: '/images/8.jpg', alt: 'Eveniment 8' },
-  ];
+  useEffect(() => {
+    fetchEventImages();
+  }, []);
+
+  const fetchEventImages = async () => {
+    try {
+      const response = await fetch('/api/event-gallery');
+      const result = await response.json();
+      
+      if (result.success && result.data) {
+        const primary = result.data.filter((img: EventImage) => img.is_primary);
+        const secondary = result.data.filter((img: EventImage) => !img.is_primary);
+        setEventImages(primary);
+        setMoreEventImages(secondary);
+      }
+    } catch (error) {
+      console.error('Error fetching event images:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const contactNumber = '+40 753 077 063';
 
@@ -36,7 +55,7 @@ const EventsSection = () => {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-            Rezervări <span className="bg-gradient-to-r from-red-600 to-red-500 text-transparent bg-clip-text">Evenimente</span>
+            Rezervări <span className="bg-gradient-to-r from-red-600 to-red-500 text-transparent bg-clip-text">Evenimente Private</span>
           </h2>
           <div className="w-24 h-1.5 bg-gradient-to-r from-red-600 to-red-500 mx-auto mb-6 rounded-full"></div>
           
@@ -125,8 +144,8 @@ const EventsSection = () => {
               }}
             >
               <Image 
-                src={image.src} 
-                alt={image.alt} 
+                src={image.image_url} 
+                alt={image.alt_text} 
                 fill 
                 className="object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-105" 
                 sizes="(max-width: 768px) 50vw, 25vw"
@@ -160,8 +179,8 @@ const EventsSection = () => {
                 }}
               >
                 <Image 
-                  src={image.src} 
-                  alt={image.alt} 
+                  src={image.image_url} 
+                  alt={image.alt_text} 
                   fill 
                   className="object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-105" 
                   sizes="(max-width: 768px) 50vw, 25vw"

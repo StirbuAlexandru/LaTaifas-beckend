@@ -101,10 +101,10 @@ const FeaturedProducts = () => {
           {/* Title, Line, Description - Centered */}
           <div className="text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-              Cele mai noi <span className="bg-gradient-to-r from-red-600 to-orange-500 text-transparent bg-clip-text">preparate</span>
+              Preparate <span className="bg-gradient-to-r from-red-600 to-orange-500 text-transparent bg-clip-text">noi</span>
             </h2>
             <div className="w-24 h-1.5 bg-gradient-to-r from-red-600 to-orange-500 mx-auto mb-6 rounded-full"></div>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">Descoperă cele mai recente adăugări la meniul nostru - preparate proaspete și delicioase</p>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">Descopera cele mai noi produse din meniul nostru – preparate proaspete si delicioase…</p>
           </div>
         </div>
         
