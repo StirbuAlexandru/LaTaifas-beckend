@@ -170,8 +170,8 @@ const ComandaOnlinePage = () => {
       // Build URL - special handling for REDUCERI category
       let url;
       if (categoryId === DISCOUNTS_CATEGORY_ID) {
-        // Fetch ALL products without limit for REDUCERI to ensure we catch all discounted items
-        url = `/api/products?page=1&limit=1000`;
+        // Fetch products with discounts using pagination
+        url = `/api/products?discounted=true&page=${page}&limit=${productsPerPage}`;
       } else {
         // Build URL with category filter
         url = `/api/products?categoryId=${categoryId}&page=${page}&limit=${productsPerPage}`;
@@ -181,17 +181,7 @@ const ComandaOnlinePage = () => {
       const data = await response.json();
       if (data.success) {
         // Transform API response to match Product interface
-        let productsToTransform = data.data.products || [];
-        
-        // Filter for REDUCERI category - products with any discount value > 0
-        if (categoryId === DISCOUNTS_CATEGORY_ID) {
-          // Filter products with valid discounts
-          productsToTransform = productsToTransform.filter((p: any) => {
-            const hasDiscountValue = p.discount_value && Number(p.discount_value) > 0;
-            const hasDiscountType = p.discount_type === 'percentage' || p.discount_type === 'fixed';
-            return hasDiscountValue && hasDiscountType;
-          });
-        }
+        const productsToTransform = data.data.products || [];
         
         const transformedProducts: Product[] = productsToTransform.map((p: any) => ({
           id: p.id,

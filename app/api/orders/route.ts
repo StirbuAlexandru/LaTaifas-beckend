@@ -91,13 +91,14 @@ export async function POST(request: NextRequest) {
       customer_email,
       customer_phone,
       customer_address,
+      delivery_zone_id,
       delivery_notes,
       payment_method,
       items,
     } = body;
 
     // Validation
-    if (!customer_name || !customer_phone || !customer_address || !items || items.length === 0) {
+    if (!customer_name || !customer_phone || !customer_address || !delivery_zone_id || !items || items.length === 0) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
@@ -122,6 +123,7 @@ export async function POST(request: NextRequest) {
         customer_email: customer_email || null,
         customer_phone,
         customer_address,
+        delivery_zone_id,
         delivery_notes: delivery_notes || null,
         total_amount: totalAmount,
         status: 'pending',

@@ -145,15 +145,23 @@ export async function GET(request: NextRequest, { params }: { params?: { id: str
     const maxPrice = searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined;
     const inStock = searchParams.get('inStock') === 'true' ? true : undefined;
     const featured = searchParams.get('featured') === 'true' ? true : undefined;
+    const discounted = searchParams.get('discounted') === 'true' ? true : undefined;
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '12');
     const sortBy = (searchParams.get('sortBy') as string) || 'newest';
 
-    let query = supabase.from('products').select('*');
+    let query = supabase.from('products').select('*', { count: 'exact' });
 
     // Filter by category if provided
     if (categoryId) {
       query = query.eq('category_id', categoryId);
+    }
+    
+    // Filter for discounted products only
+    if (discounted) {
+      query = query.eq('discount_active', true)
+                   .not('discount_value', 'is', null)
+                   .gt('discount_value', 0);
     }
     
     if (inStock !== undefined) query = query.eq('in_stock', inStock);

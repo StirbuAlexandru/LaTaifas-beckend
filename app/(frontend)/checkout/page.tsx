@@ -9,28 +9,71 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, MapPin, CreditCard, User, Loader2, ShoppingBag, Check } from 'lucide-react';
-import { Elements } from '@stripe/react-stripe-js';
-import { getStripe } from '@/lib/stripe';
-import StripePaymentForm from '@/components/frontend/checkout/StripePaymentForm';
+import { ArrowLeft, MapPin, CreditCard, User, Loader2, ShoppingBag, Check, AlertCircle } from 'lucide-react';
 import { getApiUrl } from '@/lib/api';
+
+interface DeliveryZone {
+  id: string;
+  zone_name: string;
+  min_order_value: number;
+  created_at: string;
+  updated_at: string;
+}
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [clientSecret, setClientSecret] = useState('');
-  const [showStripeForm, setShowStripeForm] = useState(false);
+  const [deliveryZones, setDeliveryZones] = useState<DeliveryZone[]>([]);
+  const [selectedZone, setSelectedZone] = useState<DeliveryZone | null>(null);
+  const [minOrderError, setMinOrderError] = useState('');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
     address: '',
+    deliveryZoneId: '',
     deliveryNotes: '',
     paymentMethod: 'cash',
   });
+
+  useEffect(() => {
+    fetchDeliveryZones();
+  }, []);
+
+  useEffect(() => {
+    // Verifică minimul când se schimbă zona sau totalul
+    if (selectedZone) {
+      if (cart.total < selectedZone.min_order_value) {
+        setMinOrderError(
+          `Comanda minimă pentru zona ${selectedZone.zone_name} este ${selectedZone.min_order_value} lei. Mai ai nevoie de ${(selectedZone.min_order_value - cart.total).toFixed(2)} lei.`
+        );
+      } else {
+        setMinOrderError('');
+      }
+    }
+  }, [selectedZone, cart.total]);
+
+  const fetchDeliveryZones = async () => {
+    try {
+      const response = await fetch('/api/delivery-zones');
+      const result = await response.json();
+      if (result.success) {
+        setDeliveryZones(result.data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching delivery zones:', error);
+    }
+  };
+
+  const handleZoneChange = (zoneId: string) => {
+    const zone = deliveryZones.find(z => z.id === zoneId);
+    setSelectedZone(zone || null);
+    setFormData(prev => ({ ...prev, deliveryZoneId: zoneId }));
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -45,7 +88,19 @@ export default function CheckoutPage() {
       return;
     }
 
-    // If card payment, create payment intent first
+    // Verifică dacă zona de livrare a fost selectată
+    if (!formData.deliveryZoneId || !selectedZone) {
+      alert('Te rugăm să selectezi zona de livrare!');
+      return;
+    }
+
+    // Verifică minimul comenzii
+    if (cart.total < selectedZone.min_order_value) {
+      alert(`Comanda minimă pentru zona ${selectedZone.zone_name} este ${selectedZone.min_order_value} lei. Te rugăm să adaugi mai multe produse în coș.`);
+      return;
+    }
+
+    // If card payment, initiate ING WebPay
     if (formData.paymentMethod === 'card') {
       setIsSubmitting(true);
       
@@ -56,6 +111,7 @@ export default function CheckoutPage() {
           customer_email: formData.email || null,
           customer_phone: formData.phone,
           customer_address: formData.address,
+          delivery_zone_id: formData.deliveryZoneId,
           delivery_notes: formData.deliveryNotes || null,
           payment_method: formData.paymentMethod,
           items: cart.items.map(item => ({
@@ -80,8 +136,8 @@ export default function CheckoutPage() {
           throw new Error(orderResult.error || 'Eroare la plasarea comenzii');
         }
 
-        // Create payment intent
-        const paymentResponse = await fetch('/api/create-payment-intent', {
+        // Initiate ING WebPay payment
+        const paymentResponse = await fetch('/api/ing/initiate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -89,16 +145,18 @@ export default function CheckoutPage() {
           body: JSON.stringify({
             amount: cart.total,
             orderId: orderResult.data.id,
+            customerName: formData.fullName,
+            customerEmail: formData.email,
           }),
         });
 
         const paymentResult = await paymentResponse.json();
 
-        if (paymentResult.success && paymentResult.clientSecret) {
-          setClientSecret(paymentResult.clientSecret);
-          setShowStripeForm(true);
+        if (paymentResult.success && paymentResult.formUrl) {
+          // Redirect to ING payment page
+          window.location.href = paymentResult.formUrl;
         } else {
-          throw new Error('Eroare la inițializarea plății');
+          throw new Error(paymentResult.error || 'Eroare la inițializarea plății');
         }
       } catch (error: any) {
         console.error('Eroare:', error);
@@ -118,6 +176,7 @@ export default function CheckoutPage() {
         customer_email: formData.email || null,
         customer_phone: formData.phone,
         customer_address: formData.address,
+        delivery_zone_id: formData.deliveryZoneId,
         delivery_notes: formData.deliveryNotes || null,
         payment_method: formData.paymentMethod,
         items: cart.items.map(item => ({
@@ -158,16 +217,8 @@ export default function CheckoutPage() {
     }
   };
 
-  const handlePaymentSuccess = () => {
-    clearCart();
-    alert('✅ Plata a fost procesată cu succes! Comanda ta a fost plasată.');
-    router.push('/orders');
-  };
-
   const handlePaymentError = (error: string) => {
     alert(`❌ ${error}`);
-    setShowStripeForm(false);
-    setClientSecret('');
   };
 
   if (cart.items.length === 0) {
@@ -275,6 +326,40 @@ export default function CheckoutPage() {
               </CardHeader>
               <CardContent className="space-y-4 pt-6">
                 <div>
+                  <Label htmlFor="deliveryZone" className="text-gray-900 font-semibold">Zonă Livrare *</Label>
+                  <Select
+                    value={formData.deliveryZoneId}
+                    onValueChange={handleZoneChange}
+                    required
+                  >
+                    <SelectTrigger className="w-full border-2 border-gray-200 focus:border-red-500 focus:ring-red-500">
+                      <SelectValue placeholder="Selectează zona de livrare" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white">
+                      {deliveryZones.map((zone) => (
+                        <SelectItem 
+                          key={zone.id} 
+                          value={zone.id}
+                          className="hover:bg-red-50 focus:bg-red-100 focus:text-red-900 cursor-pointer"
+                        >
+                          {zone.zone_name} (minim {zone.min_order_value} lei)
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedZone && (
+                    <p className="text-sm text-gray-600 mt-2">
+                      Comandă minimă: <span className="font-semibold text-red-600">{selectedZone.min_order_value} lei</span>
+                    </p>
+                  )}
+                  {minOrderError && (
+                    <div className="flex items-start gap-2 mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+                      <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-red-700">{minOrderError}</p>
+                    </div>
+                  )}
+                </div>
+                <div>
                   <Label htmlFor="address">Adresă Livrare *</Label>
                   <Input 
                     id="address" 
@@ -353,7 +438,7 @@ export default function CheckoutPage() {
                           </div>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 mt-1">Plată securizată prin Stripe</p>
+                      <p className="text-sm text-gray-600 mt-1">Plată securizată prin ING WebPay</p>
                       {/* Card Logos */}
                       <div className="flex items-center gap-2 mt-2">
                         <Image 
@@ -377,9 +462,14 @@ export default function CheckoutPage() {
               </CardContent>
             </Card>
             
-            {!showStripeForm && (
+            {!isSubmitting && (
               <div className="flex justify-end">
-                <Button type="submit" size="lg" disabled={isSubmitting} className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold rounded-xl px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  disabled={isSubmitting || !formData.deliveryZoneId || (selectedZone ? cart.total < selectedZone.min_order_value : false)} 
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold rounded-xl px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -400,35 +490,6 @@ export default function CheckoutPage() {
               </div>
             )}
           </form>
-
-          {/* Stripe Payment Form */}
-          {showStripeForm && clientSecret && (
-            <Card className="mt-6">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <CreditCard className="mr-2 h-5 w-5" />
-                  Plată Card Bancar
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Elements
-                  stripe={getStripe()}
-                  options={{
-                    clientSecret,
-                    appearance: {
-                      theme: 'stripe',
-                    },
-                  }}
-                >
-                  <StripePaymentForm
-                    amount={cart.total}
-                    onSuccess={handlePaymentSuccess}
-                    onError={handlePaymentError}
-                  />
-                </Elements>
-              </CardContent>
-            </Card>
-          )}
         </div>
         
         {/* Rezumat Comandă - Prima pe mobile, ultima pe desktop */}
