@@ -160,7 +160,8 @@ export default function CheckoutPage() {
         }
       } catch (error: any) {
         console.error('Eroare:', error);
-        alert('❌ A apărut o eroare. Vă rugăm să încercați din nou.');
+        const errorMsg = error.message || 'A apărut o eroare. Vă rugăm să încercați din nou.';
+        alert(`❌ ${errorMsg}`);
       } finally {
         setIsSubmitting(false);
       }
