@@ -305,6 +305,7 @@ const VinuriPage = () => {
                       <SelectItem value="linistite" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍷 Liniștite</SelectItem>
                       <SelectItem value="spumoase" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🥂 Spumoase</SelectItem>
                       <SelectItem value="perlante" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">✨ Perlante</SelectItem>
+                      <SelectItem value="spumante" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🥂 Spumante</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -362,7 +363,7 @@ const VinuriPage = () => {
                     e.currentTarget.style.boxShadow = '';
                   }}
                 >
-                  <div className="block flex-1 flex flex-col cursor-pointer">
+                  <Link href={`/wine/${wine.id}`} className="block flex-1 flex flex-col cursor-pointer">
                     {/* Discount Badge */}
                     {hasDiscount && (
                       <div className="absolute top-4 right-4 z-10">
@@ -458,7 +459,7 @@ const VinuriPage = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                   
                   {/* Add to Cart Button */}
                   <div className="px-2 pb-2">

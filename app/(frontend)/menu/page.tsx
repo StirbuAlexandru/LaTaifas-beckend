@@ -170,19 +170,19 @@ export default function MenuPage() {
                 </div>
                 <h3 className="text-lg md:text-xl font-bold text-gray-900">Categorii</h3>
               </div>
-              {/* Mobile: horizontal scroll, Desktop: vertical */}
-              <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 -mx-2 px-2 md:mx-0 md:px-0">
+              {/* Mobile: 2 columns grid, Desktop: vertical */}
+              <div className="grid grid-cols-2 md:flex md:flex-col gap-2">
                 {categories.map((category) => (
                   <Button
                     key={category.id}
                     onClick={() => setSelectedCategoryId(category.id)}
-                    className={`shrink-0 md:w-full justify-start text-left group relative overflow-hidden transition-all duration-300 text-sm md:text-base h-9 md:h-10 px-4 ${
+                    className={`md:w-full justify-center md:justify-start text-center md:text-left group relative overflow-hidden transition-all duration-300 text-[11px] md:text-base h-auto py-1 md:h-10 px-1.5 md:px-4 min-h-[32px] md:min-h-0 leading-tight ${
                       selectedCategoryId === category.id
                         ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg scale-105'
                         : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-red-600 hover:text-red-600 hover:scale-105 shadow-sm'
                     }`}
                   >
-                    <span className="relative z-10 font-semibold whitespace-nowrap">{category.name}</span>
+                    <span className="relative z-10 font-semibold break-words leading-tight">{category.name}</span>
                     {selectedCategoryId !== category.id && (
                       <div className="absolute inset-0 bg-gradient-to-r from-red-50 to-red-100 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                     )}

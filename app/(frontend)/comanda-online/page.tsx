@@ -387,7 +387,7 @@ const ComandaOnlinePage = () => {
         
         {/* Content */}
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl text-center md:text-left">
             {/* Animated Badge */}
             <div className="mb-6 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
               <div className="inline-flex items-center gap-4 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border-2 border-white/20 shadow-2xl mb-6">
@@ -412,13 +412,13 @@ const ComandaOnlinePage = () => {
 
             {/* Animated Description */}
             <div className="animate-fadeInUp" style={{ animationDelay: '0.8s' }}>
-              <p className="text-lg md:text-2xl text-gray-200 leading-relaxed max-w-3xl mb-8" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+              <p className="text-lg md:text-2xl text-gray-200 leading-relaxed max-w-3xl mb-8 mx-auto md:mx-0" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
                 Alege și vei fi 
                 <span className="font-semibold text-red-300 mx-1">mulțumit</span>!
               </p>
               
               {/* Decorative Features */}
-              <div className="flex items-center gap-6 flex-wrap">
+              <div className="flex items-center gap-6 flex-wrap justify-center md:justify-start">
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
                   <div className="h-2 w-2 bg-red-400 rounded-full animate-pulse"></div>
                   <span className="text-sm font-medium">Livrare Rapidă</span>
@@ -473,8 +473,8 @@ const ComandaOnlinePage = () => {
 
               {/* Expandable Content */}
               <div 
-                className={`overflow-hidden transition-all duration-300 ${
-                  isDeliveryInfoOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+                className={`overflow-hidden transition-all duration-500 ${
+                  isDeliveryInfoOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
                 <div className="px-6 pb-6 pt-2 bg-gradient-to-b from-white to-gray-50">
@@ -519,19 +519,19 @@ const ComandaOnlinePage = () => {
                         </div>
                         <h4 className="text-lg font-bold text-gray-900">Zone de Livrare</h4>
                       </div>
-                      <div className="bg-white p-6 rounded-xl border-2 border-red-100 shadow-sm hover:shadow-md transition-shadow">
+                      <div className="bg-white p-4 md:p-6 rounded-xl border-2 border-red-100 shadow-sm hover:shadow-md transition-shadow">
                         <p className="text-sm font-semibold text-gray-700 mb-4">Valori minime de comandă:</p>
-                        <div className="space-y-2 text-sm text-gray-700">
+                        <div className="space-y-2 text-xs md:text-sm text-gray-700">
                           {deliveryZones.length > 0 ? (
                             deliveryZones.map((zone, index) => (
                               <div 
                                 key={zone.id}
-                                className={`flex justify-between items-center py-3 px-4 rounded-lg hover:bg-red-50 transition-colors ${
+                                className={`flex justify-between items-center py-2 px-3 md:py-3 md:px-4 rounded-lg hover:bg-red-50 transition-colors ${
                                   index < deliveryZones.length - 1 ? 'border-b border-gray-200' : ''
                                 }`}
                               >
-                                <span className="font-medium">{zone.zone_name}</span>
-                                <span className="font-bold text-red-600 text-base">{zone.min_order_value} lei</span>
+                                <span className="font-medium text-xs md:text-sm flex-1 pr-2 break-words">{zone.zone_name}</span>
+                                <span className="font-bold text-red-600 text-sm md:text-base whitespace-nowrap">{zone.min_order_value} lei</span>
                               </div>
                             ))
                           ) : (

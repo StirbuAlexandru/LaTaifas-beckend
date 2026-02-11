@@ -66,7 +66,7 @@ const HeroSection = () => {
           {/* Description */}
           <div className="animate-fadeInUp" style={{ animationDelay: '0.8s' }}>
             <p className="text-base md:text-xl mb-6 text-gray-100 leading-relaxed max-w-3xl" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
-              Burdujeniul merită un loc al lui. Un loc la răscruce de drumuri, unde sensul de mers este peste tot și aiurea, unde, dacă ai poftă poți să te pui la 
+              Burdujeniul merită un loc al lui. Un loc la răscruce de drumuri, unde sensul de mers este peste tot și aiurea, unde, dacă ai poftă, poți să te pui la 
               <span className="font-semibold text-red-300 mx-1">taifas</span> 
               chiar și cu sfinții...
             </p>

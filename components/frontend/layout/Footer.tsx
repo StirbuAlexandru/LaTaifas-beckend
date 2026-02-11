@@ -116,13 +116,6 @@ const Footer = () => {
                 </div>
                 <span>lataifas23@gmail.com</span>
               </li>
-              <li className="mt-4 pt-4 border-t-2 border-red-200">
-                <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-xl border-2 border-red-100">
-                  <p className="font-bold text-red-600 mb-1">VINUM NOBILIS SRL</p>
-                  <p className="text-gray-600 text-xs">CUI: RO45346331</p>
-                  <p className="text-gray-600 text-xs">J33/2276/13.12.2021</p>
-                </div>
-              </li>
             </ul>
           </div>
         </div>
@@ -134,18 +127,18 @@ const Footer = () => {
               <Image 
                 src="/images/anpc.png" 
                 alt="ANPC" 
-                width={150} 
-                height={75}
-                className="h-20 w-40 md:h-24 md:w-48 object-contain"
+                width={200} 
+                height={100}
+                className="h-20 w-40 md:h-32 md:w-64 object-contain"
               />
             </a>
             <a href="https://consumer-redress.ec.europa.eu/site-relocation_en" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-all duration-300 transform hover:scale-110">
               <Image 
                 src="/images/sol.png" 
                 alt="SOL" 
-                width={150} 
-                height={75}
-                className="h-20 w-40 md:h-24 md:w-48 object-contain"
+                width={200} 
+                height={100}
+                className="h-20 w-40 md:h-32 md:w-64 object-contain"
               />
             </a>
           </div>

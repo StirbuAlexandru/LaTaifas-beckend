@@ -137,7 +137,7 @@ export default function AboutPage() {
                 Loc de relaxare cu mâncare, degustări de vinuri și bere - loco și delivery, magazin de vinuri vrac și en-détail. Și pentru a se bucura toată lumea în momente deosebite oferim și spațiu pentru evenimente mici și de familie.
               </p>
               <p>
-                Noi vrem să-i mulțumim pe cei care vor să ne spună ACASĂ. Și ceva, numai al nostru, aici și în jur pe aiurea, un magazin modest de vinuri pentru clienții zonei. Și, buni și pricepuți anfitrioni, ghizi ai locației noastre, personal atent e gajul calității noastre.
+                Noi vrem să-i mulțumim pe cei care vor să ne spună ACASĂ. Și ceva, numai al nostru, aici și în jur pe aiurea, magazin rafinat de vinuri pentru orice client cu pretenții. Și, buni și pricepuți anfitrioni, ghizi ai locației noastre, personalul atent e gajul calității noastre.
               </p>
             </div>
           </div>
@@ -202,10 +202,10 @@ export default function AboutPage() {
             
             <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
               <p>
-                La restaurantul fast food din rascrucea Burdujeniului preparate de baza sunt: <span className="font-semibold text-red-600">ciorbe, salate aperitive, preparate traditionale, deserturi inspirate, paste si pizza</span>, ceva mai bune decat in orasele italiene, platouri de moment dar si pentru evenimente, gratare romanesti si produse de post.
+                La restaurantul fast-food din răscruce Burdujeniului preparate de bază sunt: <span className="font-semibold text-red-600">ciorbe, salate aperitive, preparate tradiționale, deserturi</span> inspirate, <span className="font-semibold text-red-600">paste și pizza</span>- ceva mai bune, poate, chiar și decât în bucătăriile italiene, <span className="font-semibold text-red-600">platouri</span> de moment dar și pentru evenimente, <span className="font-semibold text-red-600">grătare românești</span> dar și cu ștaif, chiar și <span className="font-semibold text-red-600">produse de post</span>.
               </p>
               <p>
-                Si cum, bucatarul e sufletul unui loc in care se ofera mancare, ne mandrim, fara modestie, cu bucatarii nostrii.
+                Și cum, bucătarul e sufletul unui loc în care se oferă mâncare, ne mândrim, fără modestie, cu bucătarii noștri.
               </p>
             </div>
             
@@ -343,7 +343,7 @@ export default function AboutPage() {
                       {/* Mobile Grid */}
                       <div className="md:hidden grid grid-cols-2 gap-6 bg-gradient-to-br from-white via-red-50/30 to-orange-50/30 backdrop-blur-sm rounded-3xl px-8 py-10 shadow-xl border-2 border-white/50">
                         <div className="flex items-center justify-center transition-all duration-300 transform hover:scale-110">
-                          <Image src="/images/tuborg.png" alt="Tuborg" width={140} height={70} className="object-contain drop-shadow-md" />
+                          <Image src="/images/tuborg.png" alt="Tuborg" width={70} height={35} className="object-contain drop-shadow-md" />
                         </div>
                         <div className="flex items-center justify-center transition-all duration-300 transform hover:scale-110">
                           <Image src="/images/Domeniile_Bohotin.png" alt="Domeniile Bohotin" width={90} height={45} className="object-contain drop-shadow-md" />
@@ -362,7 +362,7 @@ export default function AboutPage() {
                       {/* Desktop Horizontal */}
                       <div className="hidden md:flex items-center justify-center gap-8 bg-gradient-to-br from-white via-red-50/30 to-orange-50/30 backdrop-blur-sm rounded-full px-10 py-6 shadow-xl border-2 border-white/50">
                         <div className="transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">
-                          <Image src="/images/tuborg.png" alt="Tuborg" width={180} height={90} className="object-contain drop-shadow-md" />
+                          <Image src="/images/tuborg.png" alt="Tuborg" width={100} height={50} className="object-contain drop-shadow-md" />
                         </div>
                         <div className="h-20 w-0.5 bg-gradient-to-b from-transparent via-red-400 to-transparent"></div>
                         <div className="transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">
