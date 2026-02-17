@@ -2,15 +2,15 @@
 
 export const ING_CONFIG = {
   endpoints: {
-    register: 'https://securepay.ing.ro/mpi/rest/register.do',
-    registerPreAuth: 'https://securepay.ing.ro/mpi/rest/registerPreAuth.do',
-    getOrderStatus: 'https://securepay.ing.ro/mpi/rest/getOrderStatus.do',
-    getOrderStatusExtended: 'https://securepay.ing.ro/mpi/rest/getOrderStatusExtended.do',
-    reverse: 'https://securepay.ing.ro/mpi/rest/reverse.do',
-    deposit: 'https://securepay.ing.ro/mpi/rest/deposit.do',
+    // Folosește endpoint-urile din .env.local (UAT pentru test, producție pentru live)
+    base: process.env.ING_WEBPAY_ENDPOINT || 'https://securepay-uat.ing.ro/mpi_uat/rest',
   },
   currency: '946', // RON
 };
+
+// Construiește URL-urile dinamice bazate pe endpoint-ul de bază
+const getEndpoint = (action: string) => `${ING_CONFIG.endpoints.base}/${action}`;
+
 
 export interface INGInitiateParams {
   amount: number; // în bani (100 = 1 RON)
@@ -63,7 +63,7 @@ export async function initiateINGPayment(params: INGInitiateParams): Promise<ING
   });
 
   try {
-    const response = await fetch(ING_CONFIG.endpoints.register, {
+    const response = await fetch(getEndpoint('register.do'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -90,7 +90,7 @@ export async function getINGOrderStatus(orderId: string): Promise<INGOrderStatus
   });
 
   try {
-    const response = await fetch(ING_CONFIG.endpoints.getOrderStatus, {
+    const response = await fetch(getEndpoint('getOrderStatus.do'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

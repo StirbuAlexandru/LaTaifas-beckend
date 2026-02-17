@@ -16,27 +16,31 @@ function PaymentSuccessContent() {
 
   const orderId = searchParams.get('orderId');
   const orderNumber = searchParams.get('orderNumber');
-  const ingOrderId = searchParams.get('orderId'); // ING trimite orderId în URL
+  const mdOrder = searchParams.get('mdOrder'); // ING trimite mdOrder în URL
 
   useEffect(() => {
-    if (!ingOrderId) {
+    if (!mdOrder) {
       setIsVerifying(false);
       setPaymentStatus('failed');
       setErrorMessage('Lipsesc parametrii de plată');
       return;
     }
 
-    // Verifică statusul plății
+    // Verifică statusul plății folosind mdOrder
     const verifyPayment = async () => {
       try {
-        const response = await fetch(`/api/ing/status?ingOrderId=${ingOrderId}`);
+        const response = await fetch('/api/ing/check-status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mdOrder }),
+        });
         const result = await response.json();
 
-        if (result.success && result.isSuccessful) {
+        if (result.success && result.isPaid) {
           setPaymentStatus('success');
         } else {
           setPaymentStatus('failed');
-          setErrorMessage(result.errorMessage || 'Plata nu a fost procesată cu succes');
+          setErrorMessage(result.error || 'Plata nu a fost procesată cu succes');
         }
       } catch (error) {
         console.error('Payment verification error:', error);
@@ -48,7 +52,7 @@ function PaymentSuccessContent() {
     };
 
     verifyPayment();
-  }, [ingOrderId]);
+  }, [mdOrder]);
 
   if (isVerifying) {
     return (
