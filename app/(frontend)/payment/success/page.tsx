@@ -38,9 +38,27 @@ function PaymentSuccessContent() {
 
         if (result.success && result.isPaid) {
           setPaymentStatus('success');
+          
+          // Actualizează statusul comenzii în 'paid' și trimite email de confirmare
+          if (orderId) {
+            await fetch(`/api/orders/${orderId}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ status: 'confirmed' }),
+            });
+          }
         } else {
           setPaymentStatus('failed');
           setErrorMessage(result.error || 'Plata nu a fost procesată cu succes');
+          
+          // Actualizează statusul comenzii în 'failed'
+          if (orderId) {
+            await fetch(`/api/orders/${orderId}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ status: 'cancelled' }),
+            });
+          }
         }
       } catch (error) {
         console.error('Payment verification error:', error);
@@ -52,7 +70,7 @@ function PaymentSuccessContent() {
     };
 
     verifyPayment();
-  }, [mdOrder]);
+  }, [mdOrder, orderId]);
 
   if (isVerifying) {
     return (

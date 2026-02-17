@@ -164,8 +164,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send confirmation email if customer provided email (non-blocking)
-    if (customer_email) {
+    // Send confirmation email ONLY if payment method is NOT card
+    // For card payments, email will be sent after payment verification
+    if (customer_email && payment_method !== 'card') {
       sendOrderStatusEmail({
         to: customer_email,
         orderNumber: orderNumber,
