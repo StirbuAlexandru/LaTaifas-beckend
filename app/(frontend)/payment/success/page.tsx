@@ -19,6 +19,25 @@ function PaymentSuccessContent() {
   const mdOrder = searchParams.get('mdOrder'); // ING trimite mdOrder în URL
 
   useEffect(() => {
+    // Verifică dacă avem deja status verificat din ing-return page
+    const preVerifiedStatus = searchParams.get('status');
+    
+    if (preVerifiedStatus === 'success') {
+      // Status deja verificat în ing-return, actualizăm doar comanda
+      setPaymentStatus('success');
+      setIsVerifying(false);
+      
+      if (orderId) {
+        fetch(`/api/orders/${orderId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'confirmed' }),
+        }).catch(error => console.error('Error updating order:', error));
+      }
+      return;
+    }
+
+    // Altfel, verificăm statusul plății folosind mdOrder
     if (!mdOrder) {
       setIsVerifying(false);
       setPaymentStatus('failed');
@@ -26,7 +45,6 @@ function PaymentSuccessContent() {
       return;
     }
 
-    // Verifică statusul plății folosind mdOrder
     const verifyPayment = async () => {
       try {
         const response = await fetch('/api/ing/check-status', {
@@ -39,7 +57,7 @@ function PaymentSuccessContent() {
         if (result.success && result.isPaid) {
           setPaymentStatus('success');
           
-          // Actualizează statusul comenzii în 'paid' și trimite email de confirmare
+          // Actualizează statusul comenzii în 'confirmed' și trimite email de confirmare
           if (orderId) {
             await fetch(`/api/orders/${orderId}`, {
               method: 'PATCH',
@@ -51,7 +69,7 @@ function PaymentSuccessContent() {
           setPaymentStatus('failed');
           setErrorMessage(result.error || 'Plata nu a fost procesată cu succes');
           
-          // Actualizează statusul comenzii în 'failed'
+          // Actualizează statusul comenzii în 'cancelled'
           if (orderId) {
             await fetch(`/api/orders/${orderId}`, {
               method: 'PATCH',
@@ -70,7 +88,7 @@ function PaymentSuccessContent() {
     };
 
     verifyPayment();
-  }, [mdOrder, orderId]);
+  }, [mdOrder, orderId, searchParams]);
 
   if (isVerifying) {
     return (

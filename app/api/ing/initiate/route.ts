@@ -20,8 +20,10 @@ export async function POST(request: NextRequest) {
     const orderNumber = generateOrderNumber();
 
     // URL-uri de return pentru succes și eșec
+    // ING va adăuga automat parametrul mdOrder la returnUrl
+    // Format: returnUrl&mdOrder=xxx sau returnUrl?mdOrder=xxx
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const returnUrl = `${baseUrl}/payment/success?orderId=${orderId}&orderNumber=${orderNumber}`;
+    const returnUrl = `${baseUrl}/payment/ing-return?orderId=${orderId}&orderNumber=${orderNumber}`;
     const failUrl = `${baseUrl}/payment/fail?orderId=${orderId}`;
 
     // Inițiază plata ING WebPay
