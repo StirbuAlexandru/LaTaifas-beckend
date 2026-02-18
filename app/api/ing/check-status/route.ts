@@ -34,6 +34,19 @@ export async function POST(request: NextRequest) {
 
     const data = await response.json();
 
+    console.log('ING getOrderStatusExtended response:', JSON.stringify(data, null, 2));
+
+    // Verifică dacă există erori în răspunsul ING
+    if (data.errorCode && data.errorCode !== '0') {
+      console.error('ING returned error:', data.errorCode, data.errorMessage);
+      return NextResponse.json({
+        success: false,
+        error: data.errorMessage || 'Eroare la verificarea plății',
+        errorCode: data.errorCode,
+        rawResponse: data,
+      });
+    }
+
     // Verifică statusul plății
     // orderStatus: 0 = Înregistrată, dar nu autorizată
     // orderStatus: 1 = Pre-autorizată
@@ -43,14 +56,17 @@ export async function POST(request: NextRequest) {
     // orderStatus: 5 = Inițiere autorizare ACS
     // orderStatus: 6 = Autorizare refuzată
 
-    const isPaid = data.orderStatus === 2;
-    const isFailed = [3, 6].includes(data.orderStatus);
+    const orderStatus = data.orderStatus || data.OrderStatus;
+    const isPaid = orderStatus === 2;
+    const isFailed = [3, 6].includes(orderStatus);
+
+    console.log(`Payment status check: orderStatus=${orderStatus}, isPaid=${isPaid}, isFailed=${isFailed}`);
 
     return NextResponse.json({
       success: true,
       isPaid,
       isFailed,
-      status: data.orderStatus,
+      status: orderStatus,
       amount: data.amount,
       currency: data.currency,
       orderNumber: data.orderNumber,
