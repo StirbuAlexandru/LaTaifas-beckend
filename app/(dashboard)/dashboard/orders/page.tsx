@@ -23,6 +23,7 @@ interface Order {
   total_amount: number;
   status: string;
   payment_method: string;
+  client_ip?: string;
   created_at: string;
   confirmed_at?: string;
   delivered_at?: string;
@@ -186,6 +187,9 @@ const OrdersPage = () => {
                       )}
                       <p><strong>Dată:</strong> {new Date(order.created_at).toLocaleString('ro-RO')}</p>
                       <p><strong>Plată:</strong> {order.payment_method === 'cash' ? 'Numerar' : 'Card'}</p>
+                      {order.client_ip && (
+                        <p><strong>IP Client:</strong> <span className="font-mono text-xs">{order.client_ip}</span></p>
+                      )}
                     </div>
                   </div>
                   <div className="text-right">

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../lib/supabaseClient';
 import { createClient } from '@supabase/supabase-js';
 import { sendOrderStatusEmail, sendRestaurantNotification } from '../../../lib/emailService';
+import { getClientIP } from '../../../lib/ipUtils';
 
 // Create admin client for service role operations
 let supabaseAdmin: any = null;
@@ -114,6 +115,10 @@ export async function POST(request: NextRequest) {
       return sum + (item.price * item.quantity);
     }, 0);
 
+    // Get client IP for fraud detection (ING WebPay compliance - Ghid 1.4.2)
+    const clientIP = getClientIP(request);
+    console.log('Order created from IP:', clientIP);
+
     // Create order
     const { data: order, error: orderError } = await supabaseAdmin
       .from('orders')
@@ -128,6 +133,7 @@ export async function POST(request: NextRequest) {
         total_amount: totalAmount,
         status: 'pending',
         payment_method: payment_method || 'cash',
+        client_ip: clientIP,
       })
       .select()
       .single();

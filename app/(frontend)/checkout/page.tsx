@@ -30,6 +30,7 @@ export default function CheckoutPage() {
   const [deliveryZones, setDeliveryZones] = useState<DeliveryZone[]>([]);
   const [selectedZone, setSelectedZone] = useState<DeliveryZone | null>(null);
   const [minOrderError, setMinOrderError] = useState('');
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -85,6 +86,12 @@ export default function CheckoutPage() {
     
     if (cart.items.length === 0) {
       alert('Coșul este gol!');
+      return;
+    }
+
+    // Verifică acceptarea termenilor și condițiilor (ING Ghid 1.3 - cerință obligatorie)
+    if (!acceptedTerms) {
+      alert('Te rugăm să accepți Termenii și Condițiile, inclusiv Politica de Anulare și Returnare, pentru a continua!');
       return;
     }
 
@@ -257,6 +264,42 @@ export default function CheckoutPage() {
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">Finalizează Comanda</h1>
           <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-red-600 to-orange-500 rounded-full mt-2 md:mt-3 mx-auto"></div>
         </div>
+
+        {/* Contact proeminent - ING Ghid 1.3: Adresa de contact vizibilă */}
+        <Card className="border-2 border-green-100 bg-green-50 mb-6">
+          <CardContent className="py-4">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center md:text-left">
+              <div className="flex items-center gap-2">
+                <div className="bg-green-600 p-2 rounded-lg">
+                  <AlertCircle className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-green-900">Ai nevoie de ajutor?</p>
+                  <p className="text-xs text-green-700">Contactează-ne oricând</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <a 
+                  href="tel:0753077063" 
+                  className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border-2 border-green-200 hover:border-green-400 transition-all hover:scale-105"
+                >
+                  <span className="text-green-600">📞</span>
+                  <span className="font-semibold text-green-900">0753 077 063</span>
+                </a>
+                <a 
+                  href="mailto:lataifas23@gmail.com" 
+                  className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border-2 border-green-200 hover:border-green-400 transition-all hover:scale-105"
+                >
+                  <span className="text-green-600">✉️</span>
+                  <span className="font-semibold text-green-900">lataifas23@gmail.com</span>
+                </a>
+              </div>
+              <p className="text-xs text-green-700 w-full md:w-auto">
+                Program: Luni-Duminică, 10:00-22:00 | Răspuns în max 2 ore
+              </p>
+            </div>
+          </CardContent>
+        </Card>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
         {/* Formular - Al doilea pe mobile, primul pe desktop */}
@@ -439,25 +482,73 @@ export default function CheckoutPage() {
                           </div>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 mt-1">Plată securizată prin ING WebPay</p>
-                      {/* Card Logos */}
-                      <div className="flex items-center gap-2 mt-2">
-                        <Image 
-                          src="/images/R.jpg" 
-                          alt="Mastercard" 
-                          width={40} 
-                          height={25}
-                          className="object-contain"
-                        />
-                        <Image 
-                          src="/images/Visa-Symbol.png" 
-                          alt="Visa" 
-                          width={40} 
-                          height={25}
-                          className="object-contain"
-                        />
+                      <p className="text-sm text-gray-600 mt-1">Plată securizată prin ING WebPay cu autentificare 3D Secure</p>
+                      {/* Card Logos - ING Ghid 1.3: Afișare logo-uri carduri acceptate și servicii de securitate */}
+                      <div className="flex flex-wrap items-center gap-3 mt-2">
+                        <div className="flex items-center gap-2">
+                          <Image 
+                            src="/images/R.jpg" 
+                            alt="Mastercard" 
+                            width={40} 
+                            height={25}
+                            className="object-contain"
+                          />
+                          <Image 
+                            src="/images/Visa-Symbol.png" 
+                            alt="Visa" 
+                            width={40} 
+                            height={25}
+                            className="object-contain"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2 border-l pl-3">
+                          <span className="text-xs font-semibold text-green-700 bg-green-50 px-2 py-1 rounded">
+                            Verified by VISA
+                          </span>
+                          <span className="text-xs font-semibold text-orange-700 bg-orange-50 px-2 py-1 rounded">
+                            Mastercard SecureCode
+                          </span>
+                        </div>
+                      </div>
+                      
+                      {/* Informații facturare - ING Ghid 1.3 */}
+                      <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <p className="text-xs text-blue-900 font-semibold mb-2">ℹ️ Informații importante despre plata cu cardul:</p>
+                        <ul className="text-xs text-blue-800 space-y-1 ml-4 list-disc">
+                          <li>Plățile sunt procesate securizat prin <strong>ING WebPay</strong></li>
+                          <li>Pe extrasul de cont va apărea: <strong>"La Taifas Suceava"</strong> sau <strong>"ING*La Taifas"</strong></li>
+                          <li>Suma va fi debitată <strong>imediat după confirmarea plății</strong></li>
+                          <li>La momentul debitării pot apărea <strong>diferențe minore de curs valutar</strong> (pentru carduri în alte valute)</li>
+                          <li>Veți primi <strong>confirmare prin email</strong> după procesarea cu succes</li>
+                        </ul>
                       </div>
                     </div>
+                  </label>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Acceptare Termeni și Condiții - ING Ghid 1.3: Obligatoriu înainte de finalizare */}
+            <Card className="border-2 border-red-100">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="acceptTerms"
+                    checked={acceptedTerms}
+                    onChange={(e) => setAcceptedTerms(e.target.checked)}
+                    className="mt-1 h-5 w-5 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer"
+                  />
+                  <label htmlFor="acceptTerms" className="text-sm text-gray-700 cursor-pointer">
+                    <span className="font-semibold">Am citit și accept </span>
+                    <Link href="/terms" target="_blank" className="text-red-600 hover:text-red-700 underline font-semibold">
+                      Termenii și Condițiile
+                    </Link>
+                    , inclusiv{' '}
+                    <span className="font-semibold text-red-600">Politica de Anulare și Returnare</span>.
+                    <span className="block mt-2 text-xs text-gray-600">
+                      * Produsele alimentare perisabile (mâncare preparată) sunt excluse de la dreptul de retragere în 14 zile conform Legii 34/2014.
+                    </span>
                   </label>
                 </div>
               </CardContent>
@@ -468,7 +559,7 @@ export default function CheckoutPage() {
                 <Button 
                   type="submit" 
                   size="lg" 
-                  disabled={isSubmitting || !formData.deliveryZoneId || (selectedZone ? cart.total < selectedZone.min_order_value : false)} 
+                  disabled={isSubmitting || !acceptedTerms || !formData.deliveryZoneId || (selectedZone ? cart.total < selectedZone.min_order_value : false)} 
                   className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold rounded-xl px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (

@@ -143,15 +143,50 @@ export default function TermsPage() {
                     <li>Aveți dreptul să renunțați fără costuri</li>
                   </ul>
 
-                  <h2 className="text-2xl font-bold text-black mt-8 mb-4">8. Politica de anulare</h2>
-                  <p><strong>Pentru rezervări:</strong></p>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Clientul este rugat să anunțe anularea cu cât mai mult timp înainte</li>
+                  <h2 className="text-2xl font-bold text-black mt-8 mb-4">8. Politica de anulare și returnare</h2>
+                  
+                  <h3 className="text-xl font-semibold text-black mt-6 mb-3">8.1. Anulare comenzi</h3>
+                  <p><strong>Pentru comenzi online:</strong></p>
+                  <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                    <li>Comenzile pot fi anulate <strong>GRATUIT</strong> înainte de confirmarea restaurantului (în primele 5 minute)</li>
+                    <li>După confirmarea comenzii, anularea nu mai este posibilă dacă preparatele au intrat în procesul de pregătire</li>
+                    <li>Pentru anulare, contactați urgent <strong>0753 077 063</strong></li>
                   </ul>
-                  <p className="mt-4"><strong>Pentru comenzi:</strong></p>
+
+                  <p className="mt-4"><strong>Pentru rezervări:</strong></p>
                   <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Comenzile plasate și confirmate nu pot fi anulate după ce au intrat în procesul de pregătire</li>
+                    <li>Rezervările pot fi anulate gratuit cu minimum 2 ore înainte</li>
+                    <li>Anulările făcute cu mai puțin de 2 ore înainte pot fi supuse unei taxe de procesare</li>
                   </ul>
+
+                  <h3 className="text-xl font-semibold text-black mt-6 mb-3">8.2. Returnare produse și rambursare</h3>
+                  <p><strong>Produse deteriorate sau greșite:</strong></p>
+                  <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
+                    <li>Dacă produsele livrate sunt deteriorate, incomplete sau nu corespund comenzii, contactați-ne IMEDIAT la <strong>0753 077 063</strong></li>
+                    <li>Vom înlocui gratuit produsele sau vă vom rambursa integral suma achitată</li>
+                    <li>Reclamațiile trebuie făcute în maximum 30 minute de la primirea comenzii</li>
+                  </ul>
+
+                  <p className="mt-4"><strong>Rambursări pentru plăți cu cardul:</strong></p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>Rambursările pentru plăți cu cardul se procesează în 3-5 zile lucrătoare</li>
+                    <li>Suma va fi returnată pe același card folosit la plată</li>
+                    <li>Veți primi confirmare prin email despre inițierea rambursării</li>
+                  </ul>
+
+                  <p className="mt-4"><strong>Rambursări pentru plăți cash:</strong></p>
+                  <ul className="list-disc list-inside space-y-2 ml-4">
+                    <li>Rambursările cash se fac la ridicarea comenzii înlocuitoare sau prin transfer bancar</li>
+                  </ul>
+
+                  <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mt-6">
+                    <p className="font-semibold text-amber-900">⚠️ Important - Drept de retragere (Legea 34/2014):</p>
+                    <p className="text-sm text-amber-800 mt-2">
+                      Conform legislației privind protecția consumatorilor, <strong>produsele alimentare perisabile 
+                      (mâncare preparată) sunt EXCLUSE de la dreptul de retragere în termen de 14 zile</strong>, 
+                      deoarece se deteriorează rapid și nu pot fi returnate din motive de igienă și siguranță alimentară.
+                    </p>
+                  </div>
 
                   <h2 className="text-2xl font-bold text-black mt-8 mb-4">9. Politica privind alergenii</h2>
                   <p>
