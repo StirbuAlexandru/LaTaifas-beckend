@@ -19,21 +19,21 @@ export async function POST(request: NextRequest) {
     // Generează orderNumber unic pentru ING
     const orderNumber = generateOrderNumber();
 
-    // URL-uri de return pentru succes și eșec
-    // ING va adăuga automat parametrul mdOrder la returnUrl
-    // Format: returnUrl&mdOrder=xxx sau returnUrl?mdOrder=xxx
+    // URL de return (ING va adăuga automat parametrul mdOrder)
+    // IMPORTANT: baseUrl trebuie să fie URL-ul real al site-ului (nu your-site.onrender.com)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const returnUrl = `${baseUrl}/payment/ing-return?orderId=${orderId}&orderNumber=${orderNumber}`;
-    const failUrl = `${baseUrl}/payment/fail?orderId=${orderId}`;
 
     // Inițiază plata ING WebPay
+    // Conform feedback ING: orderBundle și jsonParams sunt OBLIGATORII
     const result = await initiateINGPayment({
       amount: Math.round(amount * 100), // Convertește în bani (100 = 1 RON)
       orderNumber,
       returnUrl,
-      failUrl,
       description: `Comanda #${orderId}`,
-      clientId: customerEmail || customerName,
+      email: customerEmail, // ING cere 'email', NU 'clientId'
+      orderBundle: '{}', // Obligatoriu per ING feedback
+      jsonParams: '{"FORCE_3DS2":true}', // Obligatoriu per ING feedback - forțează 3D Secure 2
     });
 
     if (result.errorCode && result.errorCode !== '0') {

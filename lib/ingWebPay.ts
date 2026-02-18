@@ -16,10 +16,10 @@ export interface INGInitiateParams {
   amount: number; // în bani (100 = 1 RON)
   orderNumber: string;
   returnUrl: string;
-  failUrl: string;
   description?: string;
-  clientId?: string;
-  jsonParams?: string;
+  email?: string; // Client email (NOT clientId)
+  orderBundle?: string; // JSON string pentru date comandă (obligatoriu per ING)
+  jsonParams?: string; // JSON pentru 3DS2: {"FORCE_3DS2": true} (obligatoriu per ING)
 }
 
 export interface INGInitiateResponse {
@@ -47,6 +47,7 @@ export interface INGOrderStatus {
 
 /**
  * Inițiază o tranzacție ING WebPay
+ * Conform feedback ING: orderBundle și jsonParams sunt OBLIGATORII
  */
 export async function initiateINGPayment(params: INGInitiateParams): Promise<INGInitiateResponse> {
   const payload = new URLSearchParams({
@@ -56,10 +57,11 @@ export async function initiateINGPayment(params: INGInitiateParams): Promise<ING
     currency: ING_CONFIG.currency,
     orderNumber: params.orderNumber,
     returnUrl: params.returnUrl,
-    failUrl: params.failUrl,
+    // orderBundle și jsonParams sunt OBLIGATORII per ING feedback
+    orderBundle: params.orderBundle || '{}',
+    jsonParams: params.jsonParams || '{"FORCE_3DS2":true}',
     ...(params.description && { description: params.description }),
-    ...(params.clientId && { clientId: params.clientId }),
-    ...(params.jsonParams && { jsonParams: params.jsonParams }),
+    ...(params.email && { email: params.email }),
   });
 
   try {
