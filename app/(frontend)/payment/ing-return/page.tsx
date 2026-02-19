@@ -16,41 +16,41 @@ function INGReturnContent() {
 
   useEffect(() => {
     const verifyAndRedirect = async () => {
-      // Preia parametrii din URL
-      // - orderId = ID-ul nostru din orders table (trimis de noi în returnUrl)
-      // - orderNumber = numărul comenzii (trimis de noi în returnUrl)
-      // - ING adaugă automat parametrul 'orderId' (mdOrder) în returnUrl după plată
-      // Problema: ambele folosesc același nume 'orderId', trebuie să verificăm toate parametriile
+      console.log('=== ING RETURN PAGE ===');
       
       const allParams = Object.fromEntries(searchParams.entries());
-      console.log('=== ING RETURN PAGE ===');
       console.log('URL Parameters received:', allParams);
 
       const ourOrderId = searchParams.get('orderId');
       const orderNumber = searchParams.get('orderNumber');
-      
-      // ING poate trimite mdOrder ca parametru separat sau poate suprascrie orderId
-      // Trebuie să vedem ce primim exact în practice
-      let mdOrder = searchParams.get('mdOrder') || searchParams.get('orderID');
 
-      // Dacă nu avem mdOrder separat, înseamnă că ING a suprascris orderId
-      // În acest caz, trebuie să folosim orderNumber pentru a identifica comanda noastră
-      if (!mdOrder && ourOrderId && orderNumber) {
-        console.log('ING a suprascris orderId, folosim ca mdOrder:', ourOrderId);
-        mdOrder = ourOrderId;
-      }
-
-      console.log(`Extracted: ourOrderId=${ourOrderId}, orderNumber=${orderNumber}, mdOrder=${mdOrder}`);
-
-      if (!mdOrder) {
-        // Dacă nu există mdOrder de la ING, redirecționează către pagina de eșec
-        console.error('❌ MISSING mdOrder from ING redirect!');
-        router.replace(`/payment/fail?orderId=${ourOrderId || ''}&error=Missing ING orderId`);
+      if (!ourOrderId) {
+        console.error('❌ MISSING orderId parameter!');
+        router.replace(`/payment/fail?error=Missing order ID`);
         return;
       }
 
       try {
-        // Apelează imediat getOrderStatusExtended conform doc ING (3.7.3)
+        // Fetch order from database to get ing_order_id (mdOrder)
+        console.log('🔍 Fetching order from database:', ourOrderId);
+        const orderResponse = await fetch(`/api/orders/${ourOrderId}`);
+        
+        if (!orderResponse.ok) {
+          throw new Error('Order not found');
+        }
+
+        const orderData = await orderResponse.json();
+        const mdOrder = orderData.data?.ing_order_id;
+
+        console.log(`Order data: ing_order_id=${mdOrder}`);
+
+        if (!mdOrder) {
+          console.error('❌ MISSING ing_order_id in database!');
+          router.replace(`/payment/fail?orderId=${ourOrderId}&error=Missing ING order ID`);
+          return;
+        }
+
+        // Apelează getOrderStatusExtended conform doc ING (3.7.3)
         console.log('🔍 Calling /api/ing/check-status with mdOrder:', mdOrder);
         const response = await fetch('/api/ing/check-status', {
           method: 'POST',
@@ -61,28 +61,13 @@ function INGReturnContent() {
         const result = await response.json();
         console.log('📊 ING Status Check Result:', result);
 
-        // Găsește orderId-ul nostru din baza de date folosind orderNumber
-        let finalOrderId = ourOrderId;
-        if (!finalOrderId && orderNumber) {
-          console.log('🔍 Fetching order by number:', orderNumber);
-          // Query database pentru a găsi orderId după orderNumber
-          const orderResponse = await fetch(`/api/orders/by-number/${orderNumber}`);
-          if (orderResponse.ok) {
-            const orderData = await orderResponse.json();
-            finalOrderId = orderData.data?.id;
-            console.log('✅ Found order ID:', finalOrderId);
-          } else {
-            console.warn('⚠️ Could not find order by number');
-          }
-        }
-
         // Construiește URL pentru redirect bazat pe rezultatul verificării
         if (result.success && result.isPaid) {
           // Plată reușită (OrderStatus = 2 - Deposited)
           console.log('✅ PAYMENT SUCCESS - Redirecting to success page');
           const successUrl = new URLSearchParams({
             mdOrder,
-            ...(finalOrderId && { orderId: finalOrderId }),
+            orderId: ourOrderId,
             ...(orderNumber && { orderNumber }),
             status: 'success',
           });
@@ -92,7 +77,7 @@ function INGReturnContent() {
           console.log('❌ PAYMENT FAILED - Redirecting to fail page');
           console.log('Fail reason:', result.error || 'No error message');
           const failUrl = new URLSearchParams({
-            ...(finalOrderId && { orderId: finalOrderId }),
+            orderId: ourOrderId,
             error: result.error || 'Plata nu a fost procesată cu succes',
           });
           router.replace(`/payment/fail?${failUrl.toString()}`);

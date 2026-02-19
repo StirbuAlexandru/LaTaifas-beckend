@@ -160,6 +160,15 @@ export default function CheckoutPage() {
         const paymentResult = await paymentResponse.json();
 
         if (paymentResult.success && paymentResult.formUrl) {
+          // Update order with ING order ID (mdOrder) before redirecting
+          if (paymentResult.ingOrderId) {
+            await fetch(`/api/orders/${orderResult.data.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ ing_order_id: paymentResult.ingOrderId }),
+            });
+          }
+          
           // Redirect to ING payment page
           window.location.href = paymentResult.formUrl;
         } else {
