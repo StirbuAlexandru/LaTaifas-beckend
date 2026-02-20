@@ -25,6 +25,7 @@ const AddWinePage = () => {
     discountValue: '',
     discountActive: false,
     wineType: '',
+    effervescence: 'still',
     sweetness: '',
     region: '',
     alcoholContent: '',
@@ -182,18 +183,31 @@ const AddWinePage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="wineType">Tip vin</Label>
+                <Label htmlFor="wineType">Culoare vin</Label>
                 <Select value={formData.wineType} onValueChange={(value) => handleSelectChange('wineType', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selectează tipul" />
+                    <SelectValue placeholder="Selectează culoarea" />
                   </SelectTrigger>
                   <SelectContent className="bg-white dark:bg-white">
                     <SelectItem value="red" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Roșu</SelectItem>
                     <SelectItem value="white" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Alb</SelectItem>
                     <SelectItem value="rose" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Rose</SelectItem>
-                    <SelectItem value="sparkling" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Spumant</SelectItem>
-                    <SelectItem value="dessert" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Desert</SelectItem>
-                    <SelectItem value="fortified" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Fortificat</SelectItem>
+                    <SelectItem value="orange" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Orange</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="effervescence">Efervescență</Label>
+                <Select value={formData.effervescence} onValueChange={(value) => handleSelectChange('effervescence', value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selectează efervescența" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white dark:bg-white">
+                    <SelectItem value="still" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Liniștite</SelectItem>
+                    <SelectItem value="perlate" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Perlate</SelectItem>
+                    <SelectItem value="spumoase" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Spumoase</SelectItem>
+                    <SelectItem value="spumante" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Spumante</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -205,14 +219,18 @@ const AddWinePage = () => {
                     <SelectValue placeholder="Selectează gradul de zahăr" />
                   </SelectTrigger>
                   <SelectContent className="bg-white dark:bg-white">
-                    <SelectItem value="dulce" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Dulce</SelectItem>
-                    <SelectItem value="demidulce" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Demidulce</SelectItem>
-                    <SelectItem value="demisec" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Demisec</SelectItem>
+                    <SelectItem value="brut" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Brut</SelectItem>
                     <SelectItem value="sec" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Sec</SelectItem>
+                    <SelectItem value="demisec" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Demisec</SelectItem>
+                    <SelectItem value="demidulce" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Demidulce</SelectItem>
+                    <SelectItem value="dulce" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Dulce</SelectItem>
+                    <SelectItem value="licoros" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Licoros</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
+            </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="year">An</Label>
                 <Input

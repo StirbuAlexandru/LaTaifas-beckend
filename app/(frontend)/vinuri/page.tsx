@@ -49,7 +49,10 @@ const VinuriPage = () => {
   const [selectedColor, setSelectedColor] = useState('all');
   const [selectedSweetness, setSelectedSweetness] = useState('all');
   const [selectedEffervescence, setSelectedEffervescence] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
   const { addToCart } = useCart();
+
+  const WINES_PER_PAGE = 12;
 
   const handleAddToCart = (wine: Wine, e: React.MouseEvent) => {
     e.preventDefault(); // Prevent Link navigation
@@ -124,9 +127,16 @@ const VinuriPage = () => {
   useEffect(() => {
     let filtered = wines;
 
-    // Filter by color (wine type)
+    // Filter by color (wine type) - only for non-sparkling types
     if (selectedColor !== 'all') {
-      filtered = filtered.filter(wine => wine.wineType === selectedColor);
+      filtered = filtered.filter(wine => {
+        // For sparkling wines, ignore color filter temporarily
+        // (we'll check effervescence separately)
+        if (wine.wineType === 'sparkling') {
+          return true; // Keep sparkling wines in results for now
+        }
+        return wine.wineType === selectedColor;
+      });
     }
 
     // Filter by sweetness
@@ -136,10 +146,23 @@ const VinuriPage = () => {
 
     // Filter by effervescence
     if (selectedEffervescence !== 'all') {
-      filtered = filtered.filter(wine => wine.customWineCategoryId === selectedEffervescence);
+      if (selectedEffervescence === 'linistite') {
+        // Liniștite = non-sparkling wines only
+        filtered = filtered.filter(wine => 
+          wine.wineType !== 'sparkling' && 
+          wine.wineType !== 'perlante'
+        );
+      } else if (selectedEffervescence === 'spumoase' || selectedEffervescence === 'spumante') {
+        // Spumoase/Spumante = only sparkling wines
+        filtered = filtered.filter(wine => wine.wineType === 'sparkling');
+      } else if (selectedEffervescence === 'perlante') {
+        // Perlante = slightly sparkling
+        filtered = filtered.filter(wine => wine.wineType === 'perlante');
+      }
     }
 
     setFilteredWines(filtered);
+    setCurrentPage(1); // Reset to page 1 when filters change
   }, [selectedColor, selectedSweetness, selectedEffervescence, wines]);
 
   const getWineTypeLabel = (type?: string) => {
@@ -152,6 +175,25 @@ const VinuriPage = () => {
       fortified: 'Fortificat',
     };
     return type ? labels[type] || type : '';
+  };
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredWines.length / WINES_PER_PAGE);
+  const startIndex = (currentPage - 1) * WINES_PER_PAGE;
+  const endIndex = startIndex + WINES_PER_PAGE;
+  const currentWines = filteredWines.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll to filters section with fallback
+    setTimeout(() => {
+      const filtersElement = document.querySelector('[data-filters-section]');
+      if (filtersElement) {
+        const yOffset = -20; // Small offset from top
+        const y = filtersElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
@@ -226,6 +268,7 @@ const VinuriPage = () => {
 
       {/* Ultra Modern Filter Bar - Static (Does NOT scroll) */}
       <div 
+        data-filters-section
         className="relative z-20 backdrop-blur-md border-b" 
         style={{ 
           background: 'linear-gradient(135deg, #bf3d3d 0%, #8b2c2c 100%)',
@@ -289,6 +332,7 @@ const VinuriPage = () => {
                       <SelectItem value="demidulce" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🌿 Demidulce</SelectItem>
                       <SelectItem value="dulce" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🍯 Dulce</SelectItem>
                       <SelectItem value="licoros" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🥃 Licoros</SelectItem>
+                      <SelectItem value="brut" className="bg-white dark:bg-white hover:bg-red-400 dark:hover:bg-red-400 focus:bg-red-400 dark:focus:bg-red-400 text-gray-900 dark:text-gray-900 data-[highlighted]:bg-red-400">🥂 Brut</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -335,8 +379,9 @@ const VinuriPage = () => {
             <p className="text-xl text-gray-600">Nu am găsit vinuri în această categorie</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8">
-            {filteredWines.map((wine) => {
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8">
+              {currentWines.map((wine) => {
               const finalPrice = calculateFinalPrice(
                 wine.price,
                 {
@@ -474,7 +519,83 @@ const VinuriPage = () => {
                 </div>
               );
             })}
-          </div>
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-12 flex flex-col items-center gap-4">
+                {/* Page Numbers */}
+                <nav className="flex items-center gap-2" aria-label="Pagination">
+                  {/* Previous Button */}
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all ${
+                      currentPage === 1
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                        : 'bg-white text-gray-700 hover:bg-red-600 hover:text-white shadow-sm hover:shadow-md'
+                    }`}
+                  >
+                    Înapoi
+                  </button>
+
+                  {/* Page Numbers */}
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                      // Show first page, last page, current page, and pages around current
+                      const showPage = 
+                        page === 1 || 
+                        page === totalPages || 
+                        (page >= currentPage - 1 && page <= currentPage + 1);
+                      
+                      const showEllipsisBefore = page === currentPage - 2 && currentPage > 3;
+                      const showEllipsisAfter = page === currentPage + 2 && currentPage < totalPages - 2;
+
+                      if (showEllipsisBefore || showEllipsisAfter) {
+                        return (
+                          <span
+                            key={`ellipsis-${page}`}
+                            className="px-3 py-2 text-gray-400 text-sm font-semibold"
+                          >
+                            ...
+                          </span>
+                        );
+                      }
+
+                      if (!showPage) return null;
+
+                      return (
+                        <button
+                          key={page}
+                          onClick={() => handlePageChange(page)}
+                          className={`min-w-[40px] h-[40px] rounded-lg text-sm font-semibold transition-all ${
+                            currentPage === page
+                              ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg scale-110'
+                              : 'bg-white text-gray-700 hover:bg-red-50 hover:text-red-600 shadow-sm hover:shadow-md'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Next Button */}
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all ${
+                      currentPage === totalPages
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                        : 'bg-white text-gray-700 hover:bg-red-600 hover:text-white shadow-sm hover:shadow-md'
+                    }`}
+                  >
+                    Înainte
+                  </button>
+                </nav>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

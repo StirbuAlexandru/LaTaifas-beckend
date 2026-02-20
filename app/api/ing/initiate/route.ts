@@ -19,10 +19,11 @@ export async function POST(request: NextRequest) {
     // Generează orderNumber unic pentru ING
     const orderNumber = generateOrderNumber();
 
-    // URL de return (ING va adăuga automat parametrul mdOrder)
-    // IMPORTANT: baseUrl trebuie să fie URL-ul real al site-ului (nu your-site.onrender.com)
+    // URL de return (ING va adăuga automat parametrul orderId care conține mdOrder)
+    // IMPORTANT: folosim 'comanda' pentru ID-ul nostru, nu 'orderId', pentru a evita conflicte
+    // cu parametrul orderId pe care ING îl adaugă automat
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const returnUrl = `${baseUrl}/payment/ing-return?orderId=${orderId}&orderNumber=${orderNumber}`;
+    const returnUrl = `${baseUrl}/payment/ing-return?comanda=${orderId}&orderNumber=${orderNumber}`;
 
     // Inițiază plata ING WebPay
     // Conform feedback ING: orderBundle și jsonParams sunt OBLIGATORII

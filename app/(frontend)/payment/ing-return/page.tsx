@@ -7,8 +7,14 @@ import { Loader2 } from 'lucide-react';
 
 /**
  * Pagină intermediară pentru redirectarea de la ING WebPay
- * ING adaugă parametrul mdOrder la URL după procesarea plății
- * Această pagină preia mdOrder și redirecționează către /payment/success pentru verificare
+ * 
+ * ING adaugă automat parametrul 'orderId' la returnUrl cu valoarea mdOrder (ID-ul lor intern)
+ * Noi trimitem 'comanda' = ID-ul nostru de comandă din baza de date
+ * 
+ * Parametri în URL:
+ * - comanda: ID-ul nostru de comandă (UUID din tabelul orders)
+ * - orderId: mdOrder adăugat automat de ING (ID-ul lor de tranzacție)
+ * - orderNumber: Numărul de comandă pentru ING
  */
 function INGReturnContent() {
   const router = useRouter();
@@ -21,11 +27,20 @@ function INGReturnContent() {
       const allParams = Object.fromEntries(searchParams.entries());
       console.log('URL Parameters received:', allParams);
 
-      const ourOrderId = searchParams.get('orderId');
+      // 'comanda' = ID-ul nostru de comandă
+      // 'orderId' = mdOrder de la ING (adăugat automat de ei)
+      const ourOrderId = searchParams.get('comanda');
+      const mdOrderFromURL = searchParams.get('orderId'); // mdOrder de la ING
       const orderNumber = searchParams.get('orderNumber');
 
+      console.log('📋 Parameters:', {
+        ourOrderId: ourOrderId,
+        mdOrderFromURL: mdOrderFromURL,
+        orderNumber: orderNumber
+      });
+
       if (!ourOrderId) {
-        console.error('❌ MISSING orderId parameter!');
+        console.error('❌ MISSING comanda parameter!');
         router.replace(`/payment/fail?error=Missing order ID`);
         return;
       }
@@ -42,11 +57,11 @@ function INGReturnContent() {
         const orderData = await orderResponse.json();
         const mdOrder = orderData.data?.ing_order_id;
 
-        console.log(`Order data: ing_order_id=${mdOrder}`);
+        console.log(`Order data: ing_order_id=${mdOrder}, URL mdOrder=${mdOrderFromURL}`);
 
         if (!mdOrder) {
           console.error('❌ MISSING ing_order_id in database!');
-          router.replace(`/payment/fail?orderId=${ourOrderId}&error=Missing ING order ID`);
+          router.replace(`/payment/fail?comanda=${ourOrderId}&error=Missing ING order ID`);
           return;
         }
 
