@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔔 Alerte Comenzi Restaurant</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .status {
+            font-size: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .status.active {
+            background: #10b981;
+            color: white;
+        }
+        .status.inactive {
+            background: #ef4444;
+            color: white;
+        }
+        .info {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .info p {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .info strong {
+            color: #667eea;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        .last-check {
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #333;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border: 4px solid #10b981;
+            font-size: 24px;
+            font-weight: bold;
+            animation: bounce 1s infinite;
+            z-index: 1000;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔔 Sistem Alertă Comenzi</h1>
+        
+        <div id="status" class="status inactive">
+            ⏸️ Oprit - Click pentru a porni
+        </div>
+        
+        <div class="info">
+            <p><strong>Comenzi în așteptare:</strong> <span id="orderCount">-</span></p>
+            <p><strong>Verificare automată:</strong> <span>La 10 secunde</span></p>
+            <p><strong>Durată sunet:</strong> <span>5 secunde</span></p>
+            <p><strong>URL Server:</strong> <span id="serverUrl">-</span></p>
+        </div>
+        
+        <button id="toggleBtn" onclick="toggleMonitoring()">▶️ PORNEȘTE MONITORIZAREA</button>
+        <button onclick="testSound()">🔊 Testează Sunet</button>
+        
+        <div class="last-check">
+            Ultima verificare: <span id="lastCheck">Niciodată</span>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURAȚIE - URL-ul serverului de producție
+        const SERVER_URL = 'https://www.lataifas-suceava.ro';
+        const CHECK_INTERVAL = 10000; // 10 secunde
+        const BEEP_COUNT = 5; // 5 beep-uri
+        
+        let isMonitoring = false;
+        let lastOrderCount = null; // Schimbat de la 0 la null pentru a detecta prima verificare
+        let intervalId = null;
+        let audioContext = null;
+        
+        // Afișează URL-ul serverului
+        document.getElementById('serverUrl').textContent = SERVER_URL;
+        
+        // Inițializează context audio (pentru a genera sunetul)
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
+        // Generează un beep folosind Web Audio API
+        function playBeep() {
+            initAudio();
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800; // Frecvență (Hz)
+            oscillator.type = 'sine'; // Tip sunet
+            
+            gainNode.gain.setValueAtTime(1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+        
+        // Redă sunetul de alertă (5 beep-uri)
+        function playAlertSound() {
+            for (let i = 0; i < BEEP_COUNT; i++) {
+                setTimeout(() => {
+                    playBeep();
+                }, i * 1000); // Un beep la fiecare secundă
+            }
+        }
+        
+        // Testează sunetul
+        function testSound() {
+            console.log('🔊 Testare sunet...');
+            playAlertSound();
+        }
+        
+        // Verifică comenzi noi
+        async function checkOrders() {
+            try {
+                const response = await fetch(`${SERVER_URL}/api/orders?status=pending`);
+                const data = await response.json();
+                
+                const now = new Date().toLocaleTimeString('ro-RO');
+                document.getElementById('lastCheck').textContent = now;
+                
+                if (data.success) {
+                    const currentCount = data.data.orders.length;
+                    document.getElementById('orderCount').textContent = currentCount;
+                    
+                    console.log(`📊 Verificare: lastOrderCount=${lastOrderCount}, currentCount=${currentCount}`);
+                    
+                    // Dacă avem comenzi noi (și nu e prima verificare care setează counter-ul inițial)
+                    if (lastOrderCount !== null && currentCount > lastOrderCount) {
+                        const newOrders = currentCount - lastOrderCount;
+                        console.log(`🔔 COMANDĂ NOUĂ! (${newOrders} comenzi noi)`);
+                        
+                        // Redă sunetul
+                        playAlertSound();
+                        
+                        // Afișează notificare
+                        showNotification(`🔔 ${newOrders} COMANDĂ NOUĂ!`);
+                    }
+                    
+                    lastOrderCount = currentCount;
+                }
+            } catch (error) {
+                console.error('❌ Eroare la verificarea comenzilor:', error);
+                document.getElementById('lastCheck').textContent = 'Eroare de conexiune';
+            }
+        }
+        
+        // Afișează notificare pe ecran
+        function showNotification(message) {
+            // Elimină notificarea veche dacă există
+            const oldNotif = document.querySelector('.notification');
+            if (oldNotif) oldNotif.remove();
+            
+            // Creează notificare nouă
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            
+            // Ascunde după 10 secunde
+            setTimeout(() => {
+                notif.remove();
+            }, 10000);
+        }
+        
+        // Pornește/Oprește monitorizarea
+        function toggleMonitoring() {
+            isMonitoring = !isMonitoring;
+            
+            const statusDiv = document.getElementById('status');
+            const toggleBtn = document.getElementById('toggleBtn');
+            
+            if (isMonitoring) {
+                // Pornește monitorizarea
+                statusDiv.className = 'status active';
+                statusDiv.textContent = '✅ ACTIV - Monitorizare în curs...';
+                toggleBtn.textContent = '⏸️ OPREȘTE MONITORIZAREA';
+                
+                // Prima verificare
+                checkOrders();
+                
+                // Verificare periodică
+                intervalId = setInterval(checkOrders, CHECK_INTERVAL);
+                
+                console.log('✅ Monitorizare PORNITĂ');
+            } else {
+                // Oprește monitorizarea
+                statusDiv.className = 'status inactive';
+                statusDiv.textContent = '⏸️ Oprit - Click pentru a porni';
+                toggleBtn.textContent = '▶️ PORNEȘTE MONITORIZAREA';
+                
+                if (intervalId) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                }
+                
+                console.log('⏸️ Monitorizare OPRITĂ');
+            }
+        }
+        
+        // Informații la încărcare
+        console.log('🔔 Sistem Alertă Comenzi - Încărcat');
+        console.log('📍 Server:', SERVER_URL);
+        console.log('⏱️ Interval verificare:', CHECK_INTERVAL / 1000, 'secunde');
+        console.log('🔊 Beep-uri per alertă:', BEEP_COUNT);
+        console.log('');
+        console.log('👉 Click pe "PORNEȘTE MONITORIZAREA" pentru a începe!');
+    </script>
+</body>
+</html>

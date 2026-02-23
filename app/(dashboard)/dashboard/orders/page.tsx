@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { RefreshCw, Check, X, Package, Truck, CheckCircle } from 'lucide-react';
+import { RefreshCw, Check, X, Package, Truck, CheckCircle, Bell, BellOff } from 'lucide-react';
 
 interface OrderItem {
   id: string;
@@ -36,10 +36,16 @@ const OrdersPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [updatingOrder, setUpdatingOrder] = useState<string | null>(null);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [lastOrderCount, setLastOrderCount] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
 
-  const fetchOrders = async () => {
+  const fetchOrders = async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       setError(null);
       const url = statusFilter === 'all' 
         ? '/api/orders'
@@ -48,7 +54,39 @@ const OrdersPage = () => {
       const data = await response.json();
       
       if (data.success) {
-        setOrders(data.data.orders);
+        const newOrders = data.data.orders;
+        
+        // Verifică dacă există comenzi noi cu status 'pending'
+        if (silent && soundEnabled && lastOrderCount > 0) {
+          const pendingOrders = newOrders.filter((o: Order) => o.status === 'pending');
+          const oldPendingOrders = orders.filter(o => o.status === 'pending');
+          
+          if (pendingOrders.length > oldPendingOrders.length) {
+            // Comandă nouă detectată - redă sunetul
+            playNotificationSound();
+            
+            // Afișează notificare în pagină
+            const newOrdersCount = pendingOrders.length - oldPendingOrders.length;
+            setNotificationMessage(`🔔 ${newOrdersCount} comandă nouă în așteptare!`);
+            setShowNotification(true);
+            
+            // Ascunde notificarea după 10 secunde
+            setTimeout(() => {
+              setShowNotification(false);
+            }, 10000);
+            
+            // Afișează notificare browser
+            if ('Notification' in window && Notification.permission === 'granted') {
+              new Notification('Comandă Nouă!', {
+                body: `Aveți o comandă nouă în așteptare`,
+                icon: '/favicon.svg'
+              });
+            }
+          }
+        }
+        
+        setOrders(newOrders);
+        setLastOrderCount(newOrders.length);
       } else {
         setError(data.error || 'Eroare la încărcarea comenzilor');
       }
@@ -56,7 +94,44 @@ const OrdersPage = () => {
       setError('Eroare la conectarea cu serverul');
       console.error('Error fetching orders:', err);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
+    }
+  };
+
+  const playNotificationSound = () => {
+    if (audioRef.current && soundEnabled) {
+      // Setează volumul la maxim
+      audioRef.current.volume = 1.0;
+      
+      // Redă sunetul de 5 ori (cu pauză de 1 secundă între ele = ~5 secunde total)
+      let playCount = 0;
+      const maxPlays = 5;
+      
+      const playBeep = () => {
+        if (playCount < maxPlays && soundEnabled) {
+          audioRef.current?.play().catch(err => {
+            console.error('Eroare la redarea sunetului:', err);
+            // Dacă browserul blochează autoplay, arată un mesaj
+            if (err.name === 'NotAllowedError') {
+              console.warn('Browserul blochează autoplay. Click pe pagină pentru a activa sunetele.');
+            }
+          });
+          playCount++;
+          setTimeout(playBeep, 1000); // Repetă la fiecare secundă
+        }
+      };
+      
+      playBeep();
+    }
+  };
+
+  const toggleSound = () => {
+    setSoundEnabled(!soundEnabled);
+  };
+
+  const requestNotificationPermission = async () => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      await Notification.requestPermission();
     }
   };
 
@@ -89,7 +164,32 @@ const OrdersPage = () => {
 
   useEffect(() => {
     fetchOrders();
+    requestNotificationPermission();
+    
+    // Inițializează elementul audio
+    audioRef.current = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIFWa56+efTRAMT6jj8LdjHAU1kdD01H0tBSF1xO7ekjwODFqz5OyrWBYKQ5zd77BsJAUqgMrv3IU2Bxhmu+rqok4RDEyn4u69YhwGNpHQ8taCLQUgdcPp4Y47DwxYsOPwtFkXCkOb3O+xbiQFKoDK7d2FNgcYZrrn7KFOEQxMp+Ltu2IcBjaR0PPVgi0FIHbD6d+OOw8MW6/g77VaGApDm9zvsG4kBSmAyuzczTYHGGa56+mhThEMTKff7b5iHAY2kdDy1oItBSB2w+ngjjsODFuw4O+1WRgKQ5vc77BuJAUpgcrs3M02BxhmuerpoE4RDEyn3+2+YhwGNpHQ8taCLQUgdsPp4I47Dgxbr+HvtVkYCkKb3e+wbiQFKYHK7d3NNgcYZrnr6qBOEQxMp9/tvmIcBjaR0PLWgi0FIHbD6eCOOw4MW7Dg77VZGApCm93vsG4kBSmByuzczTYHGGa66+qgThEMTKff7b5iHAY2kdDy1oItBSB2w+ngjjsODFqw4e+1WRgKQpvd77BuJAUpgcrs3M02Bxhmuurqok4RDEyn3+2+YhwGNpHQ8taCLQUgdsPp4I47Dgxar+HvtVkYCkKb3e+wbiQFKYHK7dzNNgcYZrnq66JOEQxMp9/tvmIcBjaR0PLWgi0FIHbD6eCOOw4MWrDh77VZGApCm93vsG4kBSmByuzczTYHGGa66uqiThEMTKff7b5iHAY2kdDy1oItBSB2w+ngjjsODFqw4e+1WRgKQpvd77BuJAUpgcrs3M02Bxhmuurqok4RDEyn3+2+YhwGNpHQ8taCLQUgdsPp4I47Dgxar+HvtVkYCkKb3e+wbiQFKYHK7dzNNgcYZrnq66JOEQxMp9/tvmIcBjaR0PLWgi0FIHbD6eCOOw4MWrDh77VZGApCm93vsG4kBSmByuzczTYHGGa66uqiThEMTKff7b5iHAY2kdDy1oItBSB2w+ngjjsODFqw4e+1WRgKQpvd77BuJAUpgcrs3M02Bxhmuurqok4RDEyn3+2+Yhw=');
+  }, []);
+
+  useEffect(() => {
+    fetchOrders();
   }, [statusFilter]);
+
+  // Polling pentru comenzi noi - verifică la fiecare 10 secunde
+  useEffect(() => {
+    if (pollIntervalRef.current) {
+      clearInterval(pollIntervalRef.current);
+    }
+    
+    pollIntervalRef.current = setInterval(() => {
+      fetchOrders(true); // silent = true, nu arată loading
+    }, 10000); // 10 secunde
+
+    return () => {
+      if (pollIntervalRef.current) {
+        clearInterval(pollIntervalRef.current);
+      }
+    };
+  }, [orders, soundEnabled, lastOrderCount, statusFilter]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -138,12 +238,64 @@ const OrdersPage = () => {
             <option value="delivered">Livrate</option>
             <option value="cancelled">Anulate</option>
           </select>
-          <Button onClick={fetchOrders} variant="outline" disabled={loading}>
+          <Button 
+            onClick={toggleSound} 
+            variant="outline"
+            className={soundEnabled 
+              ? 'bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-200 border-green-300 dark:border-green-700 hover:bg-green-200 dark:hover:bg-green-900/60' 
+              : 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-200 border-red-300 dark:border-red-700 hover:bg-red-200 dark:hover:bg-red-900/60'
+            }
+          >
+            {soundEnabled ? (
+              <>
+                <Bell className="mr-2 h-4 w-4" />
+                Sunet Activ
+              </>
+            ) : (
+              <>
+                <BellOff className="mr-2 h-4 w-4" />
+                Sunet Oprit
+              </>
+            )}
+          </Button>
+          <Button 
+            onClick={playNotificationSound} 
+            variant="outline"
+            className="bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200 border-blue-300 dark:border-blue-700 hover:bg-blue-200 dark:hover:bg-blue-900/60 font-semibold"
+          >
+            🔊 Testează Sunet
+          </Button>
+          <Button onClick={() => fetchOrders()} variant="outline" disabled={loading}>
             <RefreshCw className={`mr-2 h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             Actualizează
           </Button>
         </div>
       </div>
+
+      {/* Notificare comandă nouă - fundal alb cu animație */}
+      {showNotification && (
+        <div className="mb-6 p-6 bg-white dark:bg-white border-4 border-green-500 rounded-lg shadow-2xl animate-pulse">
+          <div className="flex items-center gap-4">
+            <div className="flex-shrink-0">
+              <Bell className="h-12 w-12 text-green-600 animate-bounce" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                COMANDĂ NOUĂ!
+              </h3>
+              <p className="text-lg text-gray-700 font-semibold">
+                {notificationMessage}
+              </p>
+            </div>
+            <button
+              onClick={() => setShowNotification(false)}
+              className="flex-shrink-0 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
       {error && (
         <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
