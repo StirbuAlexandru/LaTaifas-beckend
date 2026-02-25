@@ -1,7 +1,6 @@
 import DashboardHeader from "@/dashboard/header/DashboardHeader";
 import DashboardSidebar from "@/dashboard/sidebar/DashboardSidebar";
 import ScrollToTop from "@/components/shared/ScrollToTop";
-import OrderNotificationSystem from "@/dashboard/notification/OrderNotificationSystem";
 import React from "react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
@@ -15,8 +14,6 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
       <ScrollToTop />
-      {/* Sistem de notificare global pentru comenzi noi - funcționează pe toate paginile dashboard */}
-      <OrderNotificationSystem />
     </div>
   );
 };

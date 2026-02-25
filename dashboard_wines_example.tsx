@@ -19,6 +19,8 @@ interface Wine {
   discountActive?: boolean;
   image?: string;
   wineType?: string;
+  effervescence?: string;
+  sweetness?: string;
   region?: string;
   alcoholContent?: number;
   volume?: number;
@@ -36,6 +38,8 @@ const WinesPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedWineType, setSelectedWineType] = useState('all');
+  const [selectedEffervescence, setSelectedEffervescence] = useState('all');
+  const [selectedSweetness, setSelectedSweetness] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -65,7 +69,7 @@ const WinesPage = () => {
     fetchWines();
   }, [currentPage]);
 
-  // Filter wines based on search and wine type
+  // Filter wines based on search and all three attributes
   useEffect(() => {
     let filtered = wines;
 
@@ -81,8 +85,16 @@ const WinesPage = () => {
       filtered = filtered.filter(wine => wine.wineType === selectedWineType);
     }
 
+    if (selectedEffervescence && selectedEffervescence !== 'all') {
+      filtered = filtered.filter(wine => wine.effervescence === selectedEffervescence);
+    }
+
+    if (selectedSweetness && selectedSweetness !== 'all') {
+      filtered = filtered.filter(wine => wine.sweetness === selectedSweetness);
+    }
+
     setFilteredWines(filtered);
-  }, [searchTerm, selectedWineType, wines]);
+  }, [searchTerm, selectedWineType, selectedEffervescence, selectedSweetness, wines]);
 
   const handleDelete = async (id: string) => {
     if (!confirm('Ești sigur că vrei să ștergi acest vin?')) return;
@@ -126,27 +138,59 @@ const WinesPage = () => {
       </div>
 
       {/* Filters */}
-      <div className="mb-6 flex gap-4">
-        <Input
-          placeholder="Caută vin..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="max-w-xs"
-        />
-        <Select value={selectedWineType} onValueChange={setSelectedWineType}>
-          <SelectTrigger className="max-w-xs">
-            <SelectValue placeholder="Tip vin" />
-          </SelectTrigger>
-          <SelectContent className="bg-white dark:bg-white">
-            <SelectItem value="all" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Toate tipurile</SelectItem>
-            <SelectItem value="red" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Roșu</SelectItem>
-            <SelectItem value="white" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Alb</SelectItem>
-            <SelectItem value="rose" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Rose</SelectItem>
-            <SelectItem value="sparkling" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Spumant</SelectItem>
-            <SelectItem value="dessert" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Desert</SelectItem>
-            <SelectItem value="fortified" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Fortificat</SelectItem>
-          </SelectContent>
-        </Select>
+      <div className="mb-6 flex flex-wrap gap-4">
+        <div className="flex-1 min-w-[200px]">
+          <Input
+            placeholder="Caută vin..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="max-w-xs"
+          />
+        </div>
+        <div className="flex-1 min-w-[200px]">
+          <Select value={selectedWineType} onValueChange={setSelectedWineType}>
+            <SelectTrigger className="max-w-xs">
+              <SelectValue placeholder="Culoare" />
+            </SelectTrigger>
+            <SelectContent className="bg-white dark:bg-white">
+              <SelectItem value="all" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Toate culorile</SelectItem>
+              <SelectItem value="red" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Roșu</SelectItem>
+              <SelectItem value="white" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Alb</SelectItem>
+              <SelectItem value="rose" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Rose</SelectItem>
+              <SelectItem value="orange" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Orange</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex-1 min-w-[200px]">
+          <Select value={selectedEffervescence} onValueChange={setSelectedEffervescence}>
+            <SelectTrigger className="max-w-xs">
+              <SelectValue placeholder="Efervescență" />
+            </SelectTrigger>
+            <SelectContent className="bg-white dark:bg-white">
+              <SelectItem value="all" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Toate</SelectItem>
+              <SelectItem value="still" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Liniștite</SelectItem>
+              <SelectItem value="spumoase" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Spumoase</SelectItem>
+              <SelectItem value="spumante" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Spumante</SelectItem>
+              <SelectItem value="perlante" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Perlante</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex-1 min-w-[200px]">
+          <Select value={selectedSweetness} onValueChange={setSelectedSweetness}>
+            <SelectTrigger className="max-w-xs">
+              <SelectValue placeholder="Grad de zahăr" />
+            </SelectTrigger>
+            <SelectContent className="bg-white dark:bg-white">
+              <SelectItem value="all" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Toate</SelectItem>
+              <SelectItem value="brut" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Brut</SelectItem>
+              <SelectItem value="sec" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Sec</SelectItem>
+              <SelectItem value="demisec" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Demisec</SelectItem>
+              <SelectItem value="demidulce" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Demidulce</SelectItem>
+              <SelectItem value="dulce" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Dulce</SelectItem>
+              <SelectItem value="licoros" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Licoros</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Loading State */}
@@ -253,7 +297,7 @@ const WinesPage = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                            {wine.wineType || '-'}
+                            {wine.wineType || '-'} - {wine.effervescence || ''} - {wine.sweetness || ''}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">

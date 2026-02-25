@@ -105,7 +105,7 @@
         <h1>🔔 Sistem Alertă Comenzi</h1>
         
         <div id="status" class="status inactive">
-            ⏸️ Oprit - Click pentru a porni
+            ⏸️ Oprit - Se pornește automat...
         </div>
         
         <div class="info">
@@ -267,13 +267,26 @@
             }
         }
         
+        // Inițializează automat monitorizarea la încărcare
+        window.onload = function() {
+            console.log('🔔 Sistemul de notificări se inițializează...');
+            
+            // Pornește monitorizarea automat după 2 secunde
+            setTimeout(() => {
+                if (!isMonitoring) {
+                    console.log('🔄 Pornește monitorizarea automat...');
+                    toggleMonitoring();
+                }
+            }, 2000);
+        };
+        
         // Informații la încărcare
         console.log('🔔 Sistem Alertă Comenzi - Încărcat');
         console.log('📍 Server:', SERVER_URL);
         console.log('⏱️ Interval verificare:', CHECK_INTERVAL / 1000, 'secunde');
         console.log('🔊 Beep-uri per alertă:', BEEP_COUNT);
         console.log('');
-        console.log('👉 Click pe "PORNEȘTE MONITORIZAREA" pentru a începe!');
+        console.log('👉 Monitorizarea va porni automat în 2 secunde!');
     </script>
 </body>
 </html>
