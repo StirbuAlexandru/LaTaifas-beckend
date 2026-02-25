@@ -57,8 +57,8 @@ export async function POST(req: NextRequest) {
       body: responseBody
     });
 
-    // Returnăm răspunsul către client
-    return Response.json({
+    // Returnăm răspunsul către client cu anteturi CORS
+    return new Response(JSON.stringify({
       orderId: orderId,
       ingResponse: {
         status: response.status,
@@ -67,6 +67,13 @@ export async function POST(req: NextRequest) {
       },
       timestamp: new Date().toISOString(),
       message: `Răspuns primit de la ING pentru comanda ${orderId}. Verificați logurile pentru detalii.`
+    }), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
     });
 
   } catch (error) {

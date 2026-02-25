@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test ING Order Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #dc2626;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #b91c1c;
+        }
+        button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            border-left: 4px solid #dc2626;
+        }
+        pre {
+            background-color: #1f2937;
+            color: #f3f4f6;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .instructions {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 6px 6px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test ING Order Status</h1>
+        
+        <div class="instructions">
+            <strong>Important:</strong> Asigurați-vă că variabila de mediu <code>ALLOW_ING_STATUS_TEST=true</code> este activată în setările aplicației pe Render și că ați făcut rebuild la aplicație.
+        </div>
+        
+        <button onclick="testINGOrder()">Testează comanda ING #53287b10-df2d-44cb-a799-1867e3aa05cc</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function testINGOrder() {
+            const button = document.querySelector('button');
+            const resultDiv = document.getElementById('result');
+            
+            button.disabled = true;
+            button.textContent = 'Se procesează...';
+            resultDiv.innerHTML = '<p>Trimitere cerere către server...</p>';
+            
+            try {
+                const response = await fetch('https://www.lataifas-suceava.ro/api/ing/order-status-test', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        orderId: '53287b10-df2d-44cb-a799-1867e3aa05cc'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <h3>Răspuns primit:</h3>
+                    <p><strong>Status:</strong> ${response.status}</p>
+                    <p><strong>Mesaj:</strong> ${data.message || 'N/A'}</p>
+                    <p><strong>Timestamp:</strong> ${data.timestamp || 'N/A'}</p>
+                    <p><strong>Order ID:</strong> ${data.orderId || 'N/A'}</p>
+                    
+                    ${data.ingResponse ? `
+                    <h4>Detalii răspuns ING:</h4>
+                    <p><strong>Cod status:</strong> ${data.ingResponse.status}</p>
+                    <p><strong>Headers:</strong></p>
+                    <pre>${JSON.stringify(data.ingResponse.headers, null, 2)}</pre>
+                    <p><strong>Corp răspuns:</strong></p>
+                    <pre>${data.ingResponse.body || '(corp gol)'}</pre>
+                    ` : ''}
+                    
+                    ${data.error ? `
+                    <p style="color: red;"><strong>Eroare:</strong> ${data.error}</p>
+                    ` : ''}
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <p style="color: red;">Eroare la apelul API:</p>
+                    <p>${error.message}</p>
+                    <p>Vă rugăm să verificați dacă variabila de mediu ALLOW_ING_STATUS_TEST este setată pe TRUE în setările aplicației pe Render.</p>
+                `;
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Testează comanda ING #53287b10-df2d-44cb-a799-1867e3aa05cc';
+            }
+        }
+    </script>
+</body>
+</html>
