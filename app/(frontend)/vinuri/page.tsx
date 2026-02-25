@@ -152,8 +152,11 @@ const VinuriPage = () => {
           wine.wineType !== 'sparkling' && 
           wine.wineType !== 'perlante'
         );
-      } else if (selectedEffervescence === 'spumoase' || selectedEffervescence === 'spumante') {
-        // Spumoase/Spumante = only sparkling wines
+      } else if (selectedEffervescence === 'spumoase') {
+        // Spumoase = only sparkling wines
+        filtered = filtered.filter(wine => wine.wineType === 'sparkling');
+      } else if (selectedEffervescence === 'spumante') {
+        // Spumante = only sparkling wines
         filtered = filtered.filter(wine => wine.wineType === 'sparkling');
       } else if (selectedEffervescence === 'perlante') {
         // Perlante = slightly sparkling

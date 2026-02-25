@@ -36,4 +36,6 @@ export interface Wine {
   featured: boolean;
   createdAt: Date;
   updatedAt: Date;
+  effervescence?: 'still' | 'perlate' | 'spumoase' | 'spumante';
+  sweetness?: 'sec' | 'demisec' | 'demidulce' | 'dulce' | 'licoros' | 'brut';
 }

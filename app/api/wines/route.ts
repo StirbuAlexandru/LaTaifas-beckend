@@ -31,6 +31,7 @@ const createWineSchema = z.object({
   }).optional(),
   discountActive: z.boolean().optional(),
   wineType: z.string().optional().nullable(),
+  effervescence: z.string().optional().nullable(),
   sweetness: z.string().optional().nullable(),
   region: z.string().optional().nullable(),
   alcoholContent: z.number().or(z.string()).optional().nullable().transform((v) => {
@@ -178,6 +179,7 @@ export async function POST(request: NextRequest) {
       discountValue,
       discountActive,
       wineType,
+      effervescence,
       sweetness,
       region,
       alcoholContent,
@@ -254,6 +256,7 @@ export async function POST(request: NextRequest) {
       discount_value: discountValue ?? null,
       discount_active: discountActive ?? false,
       wine_type: wineType ?? null,
+      effervescence: effervescence ?? null,
       sweetness: sweetness ?? null,
       region: region ?? null,
       alcohol_content: alcoholContent ?? null,

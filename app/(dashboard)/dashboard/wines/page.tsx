@@ -27,6 +27,8 @@ interface Wine {
   inStock: boolean;
   featured: boolean;
   createdAt: string;
+  effervescence?: string;
+  sweetness?: string;
 }
 
 const WinesPage = () => {
@@ -36,6 +38,8 @@ const WinesPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedWineType, setSelectedWineType] = useState('all');
+  const [selectedEffervescence, setSelectedEffervescence] = useState('all');
+  const [selectedSweetness, setSelectedSweetness] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -65,7 +69,7 @@ const WinesPage = () => {
     fetchWines();
   }, [currentPage]);
 
-  // Filter wines based on search and wine type
+  // Filter wines based on search, wine type, effervescence, and sweetness
   useEffect(() => {
     let filtered = wines;
 
@@ -80,9 +84,37 @@ const WinesPage = () => {
     if (selectedWineType && selectedWineType !== 'all') {
       filtered = filtered.filter(wine => wine.wineType === selectedWineType);
     }
+    
+    if (selectedEffervescence && selectedEffervescence !== 'all') {
+      filtered = filtered.filter(wine => {
+        // For effervescence filtering, we prioritize the effervescence property if it exists
+        if (wine.effervescence) {
+          return wine.effervescence === selectedEffervescence;
+        } else {
+          // If no effervescence property exists, we can infer from wineType for backward compatibility
+          // But we should be careful to distinguish between different sparkling types
+          if (selectedEffervescence === 'still') {
+            return !['sparkling', 'perlante'].includes(wine.wineType || '');
+          } else if (selectedEffervescence === 'spumoase') {
+            // For spumoase, we match wines with sparkling wineType
+            return wine.wineType === 'sparkling';
+          } else if (selectedEffervescence === 'spumante') {
+            // For spumante, we match wines with sparkling wineType
+            return wine.wineType === 'sparkling';
+          } else if (selectedEffervescence === 'perlate') {
+            return wine.wineType === 'perlante';
+          }
+          return true;
+        }
+      });
+    }
+    
+    if (selectedSweetness && selectedSweetness !== 'all') {
+      filtered = filtered.filter(wine => wine.sweetness === selectedSweetness);
+    }
 
     setFilteredWines(filtered);
-  }, [searchTerm, selectedWineType, wines]);
+  }, [searchTerm, selectedWineType, selectedEffervescence, selectedSweetness, wines]);
 
   const handleDelete = async (id: string) => {
     if (!confirm('Ești sigur că vrei să ștergi acest vin?')) return;
@@ -126,7 +158,7 @@ const WinesPage = () => {
       </div>
 
       {/* Filters */}
-      <div className="mb-6 flex gap-4">
+      <div className="mb-6 flex gap-4 flex-wrap">
         <Input
           placeholder="Caută vin..."
           value={searchTerm}
@@ -139,12 +171,36 @@ const WinesPage = () => {
           </SelectTrigger>
           <SelectContent className="bg-white dark:bg-white">
             <SelectItem value="all" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Toate tipurile</SelectItem>
-            <SelectItem value="red" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Roșu</SelectItem>
             <SelectItem value="white" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Alb</SelectItem>
             <SelectItem value="rose" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Rose</SelectItem>
-            <SelectItem value="sparkling" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Spumant</SelectItem>
-            <SelectItem value="dessert" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Desert</SelectItem>
-            <SelectItem value="fortified" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Fortificat</SelectItem>
+            <SelectItem value="red" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Roșu</SelectItem>
+            <SelectItem value="orange" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Orange</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select value={selectedEffervescence} onValueChange={setSelectedEffervescence}>
+          <SelectTrigger className="max-w-xs">
+            <SelectValue placeholder="Efervescentă" />
+          </SelectTrigger>
+          <SelectContent className="bg-white dark:bg-white">
+            <SelectItem value="all" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Toate</SelectItem>
+            <SelectItem value="still" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Liniștite</SelectItem>
+            <SelectItem value="perlate" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Perlate</SelectItem>
+            <SelectItem value="spumoase" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Spumoase</SelectItem>
+            <SelectItem value="spumante" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Spumante</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select value={selectedSweetness} onValueChange={setSelectedSweetness}>
+          <SelectTrigger className="max-w-xs">
+            <SelectValue placeholder="Grad zahăr" />
+          </SelectTrigger>
+          <SelectContent className="bg-white dark:bg-white">
+            <SelectItem value="all" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Toate</SelectItem>
+            <SelectItem value="sec" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Sec</SelectItem>
+            <SelectItem value="demisec" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Demisec</SelectItem>
+            <SelectItem value="demidulce" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Demidulce</SelectItem>
+            <SelectItem value="dulce" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Dulce</SelectItem>
+            <SelectItem value="licoros" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Licoros</SelectItem>
+            <SelectItem value="brut" className="bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-100 text-gray-900 dark:text-gray-900">Brut</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -252,9 +308,35 @@ const WinesPage = () => {
                           )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                            {wine.wineType || '-'}
-                          </span>
+                          <div className="space-y-1">
+                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                              {wine.wineType === 'red' ? 'Roșu' : 
+                               wine.wineType === 'white' ? 'Alb' : 
+                               wine.wineType === 'rose' ? 'Rose' : 
+                               wine.wineType === 'orange' ? 'Orange' : 
+                               wine.wineType || '-'}
+                            </span>
+                            {wine.effervescence && (
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                                {wine.effervescence === 'still' ? 'Liniștit' : 
+                                 wine.effervescence === 'perlate' ? 'Perlant' : 
+                                 wine.effervescence === 'spumoase' ? 'Spumant' : 
+                                 wine.effervescence === 'spumante' ? 'Spumant' : 
+                                 wine.effervescence || ''}
+                              </span>
+                            )}
+                            {wine.sweetness && (
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                {wine.sweetness === 'sec' ? 'Sec' : 
+                                 wine.sweetness === 'demisec' ? 'Demisec' : 
+                                 wine.sweetness === 'demidulce' ? 'Demidulce' : 
+                                 wine.sweetness === 'dulce' ? 'Dulce' : 
+                                 wine.sweetness === 'licoros' ? 'Licoros' : 
+                                 wine.sweetness === 'brut' ? 'Brut' : 
+                                 wine.sweetness}
+                              </span>
+                            )}
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900 dark:text-white">

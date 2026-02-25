@@ -26,6 +26,7 @@ const updateWineSchema = z.object({
   }).optional(),
   discountActive: z.boolean().optional(),
   wineType: z.string().optional().nullable(),
+  effervescence: z.string().optional().nullable(),
   sweetness: z.string().optional().nullable(),
   region: z.string().optional().nullable(),
   alcoholContent: z.number().or(z.string()).optional().nullable().transform((v) => {
@@ -87,6 +88,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       discountValue: data[0].discount_value || undefined,
       discountActive: data[0].discount_active || false,
       wineType: data[0].wine_type,
+      effervescence: data[0].effervescence,
       sweetness: data[0].sweetness,
       alcoholContent: data[0].alcohol_content,
       inStock: data[0].in_stock,
@@ -122,6 +124,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       discountValue,
       discountActive,
       wineType,
+      effervescence,
       sweetness,
       region,
       alcoholContent,
@@ -182,6 +185,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     if (discountValue !== undefined && discountValue !== null) payload.discount_value = discountValue;
     if (discountActive !== undefined) payload.discount_active = discountActive;
     if (wineType !== undefined) payload.wine_type = wineType;
+    if (effervescence !== undefined) payload.effervescence = effervescence;
     if (sweetness !== undefined) payload.sweetness = sweetness;
     if (region !== undefined) payload.region = region;
     if (alcoholContent !== undefined) payload.alcohol_content = alcoholContent;
