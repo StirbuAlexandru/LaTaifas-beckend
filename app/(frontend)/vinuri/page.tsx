@@ -232,12 +232,8 @@ const VinuriPage = () => {
               </div>
               
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-2 leading-tight">
-                <span className="inline-block animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
-                  Colecția Noastră
-                </span>
-                <br />
-                <span className="inline-block bg-gradient-to-r from-red-400 via-red-300 to-red-200 text-transparent bg-clip-text animate-slideInRight" style={{ animationDelay: '0.6s' }}>
-                  de Vinuri
+                <span className="inline-block bg-gradient-to-r from-red-400 via-red-300 to-red-200 text-transparent bg-clip-text animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
+                  Colectia de vinuri
                 </span>
               </h1>
             </div>
@@ -245,9 +241,7 @@ const VinuriPage = () => {
             {/* Animated Description */}
             <div className="animate-fadeInUp" style={{ animationDelay: '0.8s' }}>
               <p className="text-lg md:text-2xl text-gray-200 leading-relaxed max-w-3xl mb-8" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-                Descoperă vinuri de 
-                <span className="font-semibold text-red-300 mx-1">calitate superioară</span>, 
-                selectate cu grijă pentru a complementa perfect masa ta
+                Trebuie să te împrietenești cu vinul și sa-l alegi pe acela care merită să-i spui,  <span className="font-semibold text-red-300 mx-1">Dumneavoastră.</span>
               </p>
               
               {/* Decorative Elements */}
